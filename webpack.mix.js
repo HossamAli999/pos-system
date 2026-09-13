@@ -75,6 +75,7 @@ mix.js('resources/js/app.js', 'public/js/init.js').vue()
         'resources/plugins/AdminLTE/css/AdminLTE.rtl.min.css',
         'resources/plugins/bootstrap/css/bootstrap.rtl.min.css'
     ], 'public/css/rtl.css')
+    .copy('public/css/init.css', 'public/css/app.css')
     .copy('resources/plugins/bootstrap/fonts/glyphicons-halflings-regular.woff2', 'public/fonts/')
     .copy('resources/plugins/bootstrap/fonts/glyphicons-halflings-regular.woff', 'public/fonts/')
     .copy('resources/plugins/bootstrap/fonts/glyphicons-halflings-regular.ttf', 'public/fonts/')

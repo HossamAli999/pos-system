@@ -1,6 +1,6 @@
 
 // Fonts
-@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 // Variables
 @import "variables";
@@ -23,3 +23,6 @@
 @import 'node_modules/patternlock/dist/patternlock.min';
 
 @import 'node_modules/@yaireo/tagify/dist/tagify';
+
+// Redesign — must stay last so it wins the cascade
+@import "redesign";

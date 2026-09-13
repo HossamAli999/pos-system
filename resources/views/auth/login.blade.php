@@ -50,21 +50,20 @@
                     </span>
                 @endif
             </div>
-            <div class="form-group">
+            <div class="login-form__row">
                 <div class="checkbox icheck">
                     <label>
                         <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> @lang('lang_v1.remember_me')
                     </label>
                 </div>
+                @if(config('app.env') != 'demo')
+                    <a href="{{ route('password.request') }}" class="login-form__forgot">
+                        @lang('lang_v1.forgot_your_password')
+                    </a>
+                @endif
             </div>
-            <br>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-flat btn-login">@lang('lang_v1.login')</button>
-                @if(config('app.env') != 'demo')
-                <a href="{{ route('password.request') }}" class="pull-right">
-                    @lang('lang_v1.forgot_your_password')
-                </a>
-            @endif
             </div>
         </form>
     </div>
@@ -94,7 +93,7 @@
             <a href="?demo_type=essentials" class="btn bg-navy btn-app demo-login" data-toggle="tooltip" title="Essentials & HRM (human resource management) Module Demo" style="color:white !important" data-admin="{{$demo_types['essentials']}}">
                     <i class="fas fa-check-circle"></i>
                     Essentials & HRM</a>
-                    
+
             <a href="?demo_type=manufacturing" class="btn bg-orange btn-app demo-login" data-toggle="tooltip" title="Manufacturing module demo" style="color:white !important" data-admin="{{$demo_types['manufacturing']}}">
                     <i class="fas fa-industry"></i>
                     Manufacturing Module</a>
@@ -110,9 +109,9 @@
             <a href="{{url('docs')}}" target="_blank" class="btn btn-app" data-toggle="tooltip" title="Advance repair module demo" style="color:white !important; background-color: #2dce89">
                     <i class="fas fa-network-wired"></i>
                     Connector Module / API Documentation</a>
-        @endcomponent   
+        @endcomponent
     </div>
-    @endif 
+    @endif
 @stop
 @section('javascript')
 <script type="text/javascript">

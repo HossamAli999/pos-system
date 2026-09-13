@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
-<html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,7 +9,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title') - {{ config('app.name', 'POS') }}</title> 
+    <title>@yield('title') - {{ config('app.name', 'POS') }}</title>
 
     @include('layouts.partials.css')
 
@@ -20,74 +19,80 @@
     <![endif]-->
 </head>
 
-<body>
+<body class="auth-body">
     @inject('request', 'Illuminate\Http\Request')
     @if (session('status') && session('status.success'))
         <input type="hidden" id="status_span" data-status="{{ session('status.success') }}" data-msg="{{ session('status.msg') }}">
     @endif
-    <div class="container-fluid">
-        <div class="row eq-height-row">
-            <div class="col-md-5 col-sm-5 hidden-xs left-col eq-height-col" >
-                <div class="left-col-content login-header"> 
-                    <div style="margin-top: 50%;">
-                    <a href="/">
+
+    <div class="auth-shell">
+        <div class="auth-shell__brand">
+            <div class="auth-shell__brand-inner">
+                <a href="/" class="auth-shell__logo">
                     @if(file_exists(public_path('uploads/logo.png')))
-                        <img src="/uploads/logo.png" class="img-rounded" alt="Logo" width="150">
+                        <img src="/uploads/logo.png" alt="Logo">
                     @else
-                       {{ config('app.name', 'ultimatePOS') }}
-                    @endif 
-                    </a>
-                    <br/>
-                    @if(!empty(config('constants.app_title')))
-                        <small>{{config('constants.app_title')}}</small>
+                        <span class="auth-shell__logo-mark"><i class="fas fa-layer-group"></i></span>
+                        {{ config('app.name', 'ultimatePOS') }}
                     @endif
-                    </div>
-                </div>
+                </a>
+                @if(!empty(config('constants.app_title')))
+                    <p class="auth-shell__tagline">{{config('constants.app_title')}}</p>
+                @endif
+
+                <ul class="auth-shell__points">
+                    <li><i class="fas fa-check"></i> @lang('lang_v1.feature_pos_desc')</li>
+                    <li><i class="fas fa-check"></i> @lang('lang_v1.feature_inventory_desc')</li>
+                    <li><i class="fas fa-check"></i> @lang('lang_v1.feature_reports_desc')</li>
+                </ul>
             </div>
-            <div class="col-md-7 col-sm-7 col-xs-12 right-col eq-height-col">
-                <div class="row">
-                <div class="col-md-3 col-xs-4" style="text-align: left;">
-                    <select class="form-control input-sm" id="change_lang" style="margin: 10px;">
+        </div>
+
+        <div class="auth-shell__panel">
+            <div class="auth-shell__topbar">
+                <select class="auth-lang-select" id="change_lang">
                     @foreach(config('constants.langs') as $key => $val)
-                        <option value="{{$key}}" 
-                            @if( (empty(request()->lang) && config('app.locale') == $key) 
-                            || request()->lang == $key) 
-                                selected 
+                        <option value="{{$key}}"
+                            @if( (empty(request()->lang) && config('app.locale') == $key)
+                            || request()->lang == $key)
+                                selected
                             @endif
                         >
                             {{$val['full_name']}}
                         </option>
                     @endforeach
-                    </select>
-                </div>
-                <div class="col-md-9 col-xs-8" style="text-align: right;padding-top: 10px;">
+                </select>
+
+                <div class="auth-shell__topbar-links">
                     @if(!($request->segment(1) == 'business' && $request->segment(2) == 'register'))
-                        <!-- Register Url -->
                         @if(config('constants.allow_registration'))
-                            <a href="{{ route('business.getRegister') }}@if(!empty(request()->lang)){{'?lang=' . request()->lang}} @endif" class="btn bg-maroon btn-flat" ><b>{{ __('business.not_yet_registered')}}</b> {{ __('business.register_now') }}</a>
-                            <!-- pricing url -->
+                            <a href="{{ route('business.getRegister') }}@if(!empty(request()->lang)){{'?lang=' . request()->lang}} @endif" class="auth-shell__link-ghost">
+                                {{ __('business.not_yet_registered')}} <strong>{{ __('business.register_now') }}</strong>
+                            </a>
                             @if(Route::has('pricing') && config('app.env') != 'demo' && $request->segment(1) != 'pricing')
-                                &nbsp; <a href="{{ action([\Modules\Superadmin\Http\Controllers\PricingController::class, 'index']) }}">@lang('superadmin::lang.pricing')</a>
+                                <a href="{{ action([\Modules\Superadmin\Http\Controllers\PricingController::class, 'index']) }}" class="auth-shell__link-plain">@lang('superadmin::lang.pricing')</a>
                             @endif
                         @endif
                     @endif
                     @if($request->segment(1) != 'login')
-                        &nbsp; &nbsp;<span class="text-white">{{ __('business.already_registered')}} </span><a href="{{ action([\App\Http\Controllers\Auth\LoginController::class, 'login']) }}@if(!empty(request()->lang)){{'?lang=' . request()->lang}} @endif">{{ __('business.sign_in') }}</a>
+                        <span class="auth-shell__link-plain">{{ __('business.already_registered')}}
+                            <a href="{{ action([\App\Http\Controllers\Auth\LoginController::class, 'login']) }}@if(!empty(request()->lang)){{'?lang=' . request()->lang}} @endif">{{ __('business.sign_in') }}</a>
+                        </span>
                     @endif
                 </div>
-                
+            </div>
+
+            <div class="auth-shell__content">
                 @yield('content')
-                </div>
             </div>
         </div>
     </div>
 
-    
     @include('layouts.partials.javascripts')
-    
+
     <!-- Scripts -->
     <script src="{{ asset('js/login.js?v=' . $asset_v) }}"></script>
-    
+
     @yield('javascript')
 
     <script type="text/javascript">

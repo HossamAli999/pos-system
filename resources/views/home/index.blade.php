@@ -3,163 +3,99 @@
 
 @section('content')
 
-<!-- Content Header (Page header) -->
+@if(auth()->user()->can('dashboard.data') && $is_admin)
+<div class="dash-toolbar no-print">
+    <h1 class="dash-toolbar__title">{{ __('home.welcome_message', ['name' => Session::get('user.first_name')]) }}</h1>
+    <div class="dash-toolbar__actions">
+        @if(count($all_locations) > 1)
+            <div class="dash-toolbar__select">
+                {!! Form::select('dashboard_location', $all_locations, null, ['class' => 'form-control select2', 'placeholder' => __('lang_v1.select_location'), 'id' => 'dashboard_location']); !!}
+            </div>
+        @endif
+        <button type="button" class="dash-toolbar__date" id="dashboard_date_filter">
+            <span><i class="fa fa-calendar"></i> {{ __('messages.filter_by_date') }}</span>
+            <i class="fa fa-caret-down"></i>
+        </button>
+    </div>
+</div>
+@else
 <section class="content-header content-header-custom">
     <h1>{{ __('home.welcome_message', ['name' => Session::get('user.first_name')]) }}
     </h1>
 </section>
+@endif
+
 <!-- Main content -->
 <section class="content content-custom no-print">
-    <br>
     @if(auth()->user()->can('dashboard.data'))
         @if($is_admin)
-        	<div class="row">
-                <div class="col-md-4 col-xs-12">
-                    @if(count($all_locations) > 1)
-                        {!! Form::select('dashboard_location', $all_locations, null, ['class' => 'form-control select2', 'placeholder' => __('lang_v1.select_location'), 'id' => 'dashboard_location']); !!}
-                    @endif
-                </div>
-        		<div class="col-md-8 col-xs-12">
-                    <div class="form-group pull-right">
-                          <div class="input-group">
-                            <button type="button" class="btn btn-primary" id="dashboard_date_filter">
-                              <span>
-                                <i class="fa fa-calendar"></i> {{ __('messages.filter_by_date') }}
-                              </span>
-                              <i class="fa fa-caret-down"></i>
-                            </button>
-                          </div>
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <span class="stat-card__icon stat-card__icon--info"><i class="ion ion-ios-cart-outline"></i></span>
+                    <div class="stat-card__body">
+                        <span class="stat-card__label">{{ __('home.total_sell') }}</span>
+                        <span class="stat-card__value total_sell"><i class="fas fa-sync fa-spin fa-fw"></i></span>
                     </div>
-        		</div>
-        	</div>
-    	   <br>
-    	   <div class="row">
-                <!-- /.col -->
-                <div class="col-md-3 col-sm-6 col-xs-12 col-custom">
-                   <div class="info-box info-box-new-style">
-                        <span class="info-box-icon bg-aqua"><i class="ion ion-ios-cart-outline"></i></span>
-
-                        <div class="info-box-content">
-                          <span class="info-box-text">{{ __('home.total_sell') }}</span>
-                          <span class="info-box-number total_sell"><i class="fas fa-sync fa-spin fa-fw margin-bottom"></i></span>
-                        </div>
-                        <!-- /.info-box-content -->
-                   </div>
-                  <!-- /.info-box -->
                 </div>
-                <div class="col-md-3 col-sm-6 col-xs-12 col-custom">
-                    <div class="info-box info-box-new-style">
-                       <span class="info-box-icon bg-green">
-                            <i class="ion ion-ios-paper-outline"></i>
-                            
-                       </span>
 
-                        <div class="info-box-content">
-                          <span class="info-box-text">{{ __('lang_v1.net') }} @show_tooltip(__('lang_v1.net_home_tooltip'))</span>
-                          <span class="info-box-number net"><i class="fas fa-sync fa-spin fa-fw margin-bottom"></i></span>
-                        </div>
-                        <!-- /.info-box-content -->
+                <div class="stat-card">
+                    <span class="stat-card__icon stat-card__icon--success"><i class="ion ion-ios-paper-outline"></i></span>
+                    <div class="stat-card__body">
+                        <span class="stat-card__label">{{ __('lang_v1.net') }} @show_tooltip(__('lang_v1.net_home_tooltip'))</span>
+                        <span class="stat-card__value net"><i class="fas fa-sync fa-spin fa-fw"></i></span>
                     </div>
-                  <!-- /.info-box -->
                 </div>
-                <div class="col-md-3 col-sm-6 col-xs-12 col-custom">
-                    <div class="info-box info-box-new-style">
-                       <span class="info-box-icon bg-yellow">
-                            <i class="ion ion-ios-paper-outline"></i>
-                            <i class="fa fa-exclamation"></i>
-                       </span>
 
-                        <div class="info-box-content">
-                          <span class="info-box-text">{{ __('home.invoice_due') }}</span>
-                          <span class="info-box-number invoice_due"><i class="fas fa-sync fa-spin fa-fw margin-bottom"></i></span>
-                        </div>
-                        <!-- /.info-box-content -->
+                <div class="stat-card">
+                    <span class="stat-card__icon stat-card__icon--warning"><i class="ion ion-ios-paper-outline"></i></span>
+                    <div class="stat-card__body">
+                        <span class="stat-card__label">{{ __('home.invoice_due') }}</span>
+                        <span class="stat-card__value invoice_due"><i class="fas fa-sync fa-spin fa-fw"></i></span>
                     </div>
-                  <!-- /.info-box -->
                 </div>
 
-                <div class="col-md-3 col-sm-6 col-xs-12 col-custom">
-                    <div class="info-box info-box-new-style">
-                       <span class="info-box-icon bg-red text-white">
-                            <i class="fas fa-exchange-alt"></i>
-                       </span>
-
-                        <div class="info-box-content">
-                          <span class="info-box-text">{{ __('lang_v1.total_sell_return') }}</span>
-                          <span class="info-box-number total_sell_return"><i class="fas fa-sync fa-spin fa-fw margin-bottom"></i></span>
-                        </div>
-                        <!-- /.info-box-content -->
-                        <p class="mb-0 text-muted fs-10 mt-5">{{ __('lang_v1.total_sell_return')}}: <span class="total_sr"></span><br>
+                <div class="stat-card">
+                    <span class="stat-card__icon stat-card__icon--danger"><i class="fas fa-exchange-alt"></i></span>
+                    <div class="stat-card__body">
+                        <span class="stat-card__label">{{ __('lang_v1.total_sell_return') }}</span>
+                        <span class="stat-card__value total_sell_return"><i class="fas fa-sync fa-spin fa-fw"></i></span>
+                        <p class="stat-card__note">{{ __('lang_v1.total_sell_return')}}: <span class="total_sr"></span><br>
                             {{ __('lang_v1.total_sell_return_paid')}}<span class="total_srp"></span></p>
                     </div>
-                  <!-- /.info-box -->
                 </div>
-    	    <!-- /.col -->
-            </div>
-          	<div class="row">
-                <div class="col-md-3 col-sm-6 col-xs-12 col-custom">
-                   <div class="info-box info-box-new-style">
-                        <span class="info-box-icon bg-aqua"><i class="ion ion-cash"></i></span>
 
-                        <div class="info-box-content">
-                          <span class="info-box-text">{{ __('home.total_purchase') }}</span>
-                          <span class="info-box-number total_purchase"><i class="fas fa-sync fa-spin fa-fw margin-bottom"></i></span>
-                        </div>
-                        <!-- /.info-box-content -->
-                   </div>
-                   <!-- /.info-box -->
+                <div class="stat-card">
+                    <span class="stat-card__icon stat-card__icon--info"><i class="ion ion-cash"></i></span>
+                    <div class="stat-card__body">
+                        <span class="stat-card__label">{{ __('home.total_purchase') }}</span>
+                        <span class="stat-card__value total_purchase"><i class="fas fa-sync fa-spin fa-fw"></i></span>
+                    </div>
                 </div>
-                <!-- /.col -->
 
-                <div class="col-md-3 col-sm-6 col-xs-12 col-custom">
-                   <div class="info-box info-box-new-style">
-                        <span class="info-box-icon bg-yellow">
-                            <i class="fa fa-dollar"></i>
-                            <i class="fa fa-exclamation"></i>
-                        </span>
-
-                        <div class="info-box-content">
-                          <span class="info-box-text">{{ __('home.purchase_due') }}</span>
-                          <span class="info-box-number purchase_due"><i class="fas fa-sync fa-spin fa-fw margin-bottom"></i></span>
-                        </div>
-                        <!-- /.info-box-content -->
-                   </div>
-                  <!-- /.info-box -->
+                <div class="stat-card">
+                    <span class="stat-card__icon stat-card__icon--warning"><i class="fa fa-dollar"></i></span>
+                    <div class="stat-card__body">
+                        <span class="stat-card__label">{{ __('home.purchase_due') }}</span>
+                        <span class="stat-card__value purchase_due"><i class="fas fa-sync fa-spin fa-fw"></i></span>
+                    </div>
                 </div>
-                <!-- /.col -->
-                <div class="col-md-3 col-sm-6 col-xs-12 col-custom">
-                    <div class="info-box info-box-new-style">
-                       <span class="info-box-icon bg-red text-white">
-                            <i class="fas fa-undo-alt"></i>
-                       </span>
 
-                        <div class="info-box-content">
-                          <span class="info-box-text">{{ __('lang_v1.total_purchase_return') }}</span>
-                          <span class="info-box-number total_purchase_return"><i class="fas fa-sync fa-spin fa-fw margin-bottom"></i></span>
-                        </div>
-                        <!-- /.info-box-content -->
-                         <p class="mb-0 text-muted fs-10 mt-5">{{ __('lang_v1.total_purchase_return')}}: <span class="total_pr"></span><br>
+                <div class="stat-card">
+                    <span class="stat-card__icon stat-card__icon--danger"><i class="fas fa-undo-alt"></i></span>
+                    <div class="stat-card__body">
+                        <span class="stat-card__label">{{ __('lang_v1.total_purchase_return') }}</span>
+                        <span class="stat-card__value total_purchase_return"><i class="fas fa-sync fa-spin fa-fw"></i></span>
+                        <p class="stat-card__note">{{ __('lang_v1.total_purchase_return')}}: <span class="total_pr"></span><br>
                             {{ __('lang_v1.total_purchase_return_paid')}}<span class="total_prp"></span></p>
                     </div>
-                  <!-- /.info-box -->
                 </div>
 
-                <!-- expense -->
-                <div class="col-md-3 col-sm-6 col-xs-12 col-custom">
-                    <div class="info-box info-box-new-style">
-                        <span class="info-box-icon bg-red">
-                          <i class="fas fa-minus-circle"></i>
-                        </span>
-
-                        <div class="info-box-content">
-                          <span class="info-box-text">
-                            {{ __('lang_v1.expense') }}
-                          </span>
-                          <span class="info-box-number total_expense"><i class="fas fa-sync fa-spin fa-fw margin-bottom"></i></span>
-                        </div>
-                        <!-- /.info-box-content -->
+                <div class="stat-card">
+                    <span class="stat-card__icon stat-card__icon--danger"><i class="fas fa-minus-circle"></i></span>
+                    <div class="stat-card__body">
+                        <span class="stat-card__label">{{ __('lang_v1.expense') }}</span>
+                        <span class="stat-card__value total_expense"><i class="fas fa-sync fa-spin fa-fw"></i></span>
                     </div>
-                  <!-- /.info-box -->
                 </div>
             </div>
             @if(!empty($widgets['after_sale_purchase_totals']))
@@ -167,7 +103,7 @@
                     {!! $widget !!}
                 @endforeach
             @endif
-        @endif 
+        @endif
         <!-- end is_admin check -->
          @if(auth()->user()->can('sell.view') || auth()->user()->can('direct_sell.view'))
             @if(!empty($all_locations))

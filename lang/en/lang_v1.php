@@ -1530,5 +1530,23 @@ return [
     'product_prices_imported_successfully' => 'Product prices imported successfully',
     'price_group_price_type_tooltip' => 'If <b>Fixed</b> - the entered price will be used. If <b>Percentage</b> - price will be that much % of default selling price',
     'dropdown' => 'Dropdown',
-    'enter_dropdown_values' => 'Enter dropdown options, one option per line'
+    'enter_dropdown_values' => 'Enter dropdown options, one option per line',
+
+    // Landing page
+    'pos_module' => 'Point of Sale',
+    'run_your_shop_with' => 'Run your shop with',
+    'pos_hero_subtitle' => 'One simple system to sell, track inventory, manage purchases and grow your business across every location.',
+    'get_started' => 'Get Started',
+    'no_card_required' => 'No credit card required',
+    'everything_you_need' => 'Everything you need to sell',
+    'everything_you_need_subtitle' => 'From the counter to the back office, all in one place.',
+    'feature_pos_desc' => 'A fast, keyboard-friendly checkout built for busy counters.',
+    'feature_inventory_title' => 'Inventory',
+    'feature_inventory_desc' => 'Track stock, variations and transfers across every location.',
+    'feature_reports_desc' => 'Real-time sales, profit and stock reports whenever you need them.',
+    'feature_locations_title' => 'Multi-Location',
+    'feature_locations_desc' => 'Manage as many stores, warehouses and users as you need.',
+    'ready_to_get_started' => 'Ready to get started?',
+    'ready_to_get_started_subtitle' => 'Create your free account and start selling in minutes.',
+    'quick_actions' => 'Quick Actions',
 ];

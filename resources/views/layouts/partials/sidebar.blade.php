@@ -5,6 +5,7 @@
   <section class="sidebar">
 
 	<a href="{{route('home')}}" class="logo">
+		<span class="logo-mini"><i class="fas fa-layer-group"></i></span>
 		<span class="logo-lg">{{ Session::get('business.name') }}</span>
 	</a>
 
@@ -12,6 +13,10 @@
     {!! Menu::render('admin-sidebar-menu', 'adminltecustom'); !!}
 
     <!-- /.sidebar-menu -->
+
+    <a href="#" class="sidebar-collapse-toggle" data-toggle="offcanvas" role="button">
+        <i class="fas fa-angle-double-left"></i>
+    </a>
   </section>
   <!-- /.sidebar -->
 </aside>

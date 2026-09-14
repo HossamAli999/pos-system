@@ -122,10 +122,31 @@ body[class*="skin-"] .main-header {
 }
 body[class*="skin-"] .main-sidebar { background: var(--ink-900) !important; }
 
+// the sidebar now carries the one brand mark (icon + business name); the
+// header no longer repeats it, so reclaim the AdminLTE logo column's width.
+.main-header.main-header--no-logo .navbar {
+    margin-left: 0 !important;
+}
+.header-online-indicator {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 4px 0 14px;
+    font-size: 10px;
+}
+
 // ---------- header toolbar (layouts/partials/header.blade.php) ----------
+// The original theme's custom.css makes .navbar-custom-menu a flex container
+// (`.main-header .sidebar-toggle, .navbar-custom-menu, .navbar-right {
+// display: flex; height: 62px }`). With .header-toolbar as its sole child,
+// that turned .header-toolbar into a flex ITEM with the default flex-grow:0
+// — it shrank to its own content width instead of filling the row, leaving
+// a large dead strip of empty header on the right. Force it back to a plain
+// block so .header-toolbar's own flex layout controls the full-width row.
 .main-header .navbar-custom-menu,
 .main-header .navbar-right {
     float: none !important;
+    display: block !important;
+    height: auto !important;
 }
 .header-toolbar {
     display: flex;
@@ -230,6 +251,37 @@ body[class*="skin-"] .main-sidebar { background: var(--ink-900) !important; }
     }
     .header-toolbar { flex-wrap: wrap; height: auto; padding: 10px 12px; }
     .header-toolbar__end { margin-left: 0; }
+}
+
+// ---------- fixed app shell (desktop only) ----------
+// The original theme's default "non-fixed" AdminLTE layout puts the header
+// in normal flow and the sidebar at position:absolute — both scroll away
+// with the page. That reads as broken against the new, more prominent
+// header/sidebar chrome, so pin both on screen (desktop only — the mobile
+// header's height is now dynamic since it can wrap to 2-3 rows, so a fixed
+// mobile header would need a matching dynamic padding-top workaround that
+// isn't worth the complexity; mobile keeps the original scroll-away header).
+@media (min-width: 768px) {
+    body:not(.lockscreen) {
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1030;
+        }
+        .main-sidebar {
+            position: fixed;
+            top: 60px;
+            bottom: 0;
+            padding-top: 0;
+            overflow-y: auto;
+            z-index: 1020;
+        }
+        .content-wrapper {
+            padding-top: 60px;
+        }
+    }
 }
 
 // ---------- sidebar ----------
@@ -860,14 +912,19 @@ div.dataTables_wrapper div.dataTables_length select {
 }
 .dash-toolbar__date:hover { background: var(--ink-50); }
 
+// auto-fit/minmax instead of a fixed repeat(4,...): a flat column count only
+// reflows at viewport-width breakpoints, but the sidebar eats a chunk of the
+// *content* width the grid actually has to work with, so e.g. a 1100-1300px
+// window (very common on laptops) fell between our breakpoints and each
+// column got squeezed under its own min-content size — the grid overflowed
+// its container sideways instead of wrapping. auto-fit reflows continuously
+// off the real available width, so this can't happen at any width.
 .stat-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 16px;
     margin: 0 0 20px;
 }
-@media (max-width: 991px) { .stat-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 575px) { .stat-grid { grid-template-columns: 1fr; } }
 
 .stat-card {
     background: #fff;
@@ -947,6 +1004,14 @@ div.dataTables_wrapper div.dataTables_length select {
 .navbar-nav > .messages-menu > .dropdown-menu,
 .navbar-nav > .tasks-menu > .dropdown-menu {
     border-radius: var(--radius);
+}
+// neither AdminLTE nor Bootstrap 3 right-aligns these by default — they sit
+// at the far right of the header, so a left:0-anchored dropdown runs off the
+// edge of the viewport. Anchor from the right instead.
+.navbar-nav > .user-menu .dropdown-menu,
+.navbar-nav > .notifications-menu > .dropdown-menu {
+    left: auto;
+    right: 0;
 }
 
 .dataTables_wrapper .dataTables_info { color: var(--ink-500); }
@@ -1457,11 +1522,9 @@ hr { border-top: 1px solid var(--ink-100); }
 .features__head p { color: var(--ink-500); font-size: 16px; }
 .features__grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
     gap: 20px;
 }
-@media (max-width: 991px) { .features__grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 575px) { .features__grid { grid-template-columns: 1fr; } }
 
 .feature-card {
     background: #fff;

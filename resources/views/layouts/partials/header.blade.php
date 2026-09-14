@@ -1,10 +1,6 @@
 @inject('request', 'Illuminate\Http\Request')
 <!-- Main Header -->
-  <header class="main-header no-print">
-    <a href="{{route('home')}}" class="logo">
-      <span class="logo-lg">{{ Session::get('business.name') }} <i class="fa fa-circle text-success" id="online_indicator"></i></span>
-    </a>
-
+  <header class="main-header main-header--no-logo no-print">
     <!-- Header Navbar -->
     <nav class="navbar navbar-static-top" role="navigation">
       <!-- Sidebar toggle button-->
@@ -12,6 +8,10 @@
         &#9776;
         <span class="sr-only">Toggle navigation</span>
       </a>
+
+      <span class="header-online-indicator" title="@lang('lang_v1.connection_status')">
+        <i class="fa fa-circle text-success" id="online_indicator"></i>
+      </span>
 
       @if(Module::has('Superadmin'))
         @includeIf('superadmin::layouts.partials.active_subscription')

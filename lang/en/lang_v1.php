@@ -1553,4 +1553,5 @@ return [
     'additional_information' => 'Additional Information',
     'pricing_and_type' => 'Pricing & Type',
     'no_menu_results_found' => 'No menu items found',
+    'connection_status' => 'Connection status',
 ];

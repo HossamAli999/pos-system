@@ -24,7 +24,7 @@ id="contact_payments_table">
             @endif
         @empty
             <tr>
-                <td colspan="6" class="text-center">@lang('purchase.no_records_found')</td>
+                <td colspan="6" class="text-center">@include('components.empty_state', ['icon' => 'fas fa-money-bill-wave'])</td>
             </tr>
         @endforelse
     </tbody>

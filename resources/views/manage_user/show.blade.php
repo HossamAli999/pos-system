@@ -61,7 +61,7 @@
                         </ul>
                         @can('user.update')
                             <a href="{{action([\App\Http\Controllers\ManageUserController::class, 'edit'], [$user->id])}}" class="btn btn-primary btn-block">
-                                <i class="glyphicon glyphicon-edit"></i>
+                                <i class="fas fa-edit"></i>
                                 @lang("messages.edit")
                             </a>
                         @endcan

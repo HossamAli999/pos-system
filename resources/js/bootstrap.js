@@ -16,9 +16,35 @@ try {
 window.moment = require('moment');
 require('moment-timezone');
 
-window.Highcharts = require('highcharts');  
+window.Highcharts = require('highcharts');
 // Load module after Highcharts is loaded
-require('highcharts/modules/exporting')(Highcharts);  
+require('highcharts/modules/exporting')(Highcharts);
+
+// "Quiet ledger" chart theme — every report/dashboard chart goes through the
+// ConsoleTVs\Charts Highcharts driver (resources/views/vendor/charts/highcharts/*),
+// which just calls `new Highcharts.Chart({...})` with no color options set, so
+// Highcharts.setOptions() here is the one place that reaches all of them.
+Highcharts.setOptions({
+    colors: ['#0f6e56', '#3178a6', '#b57a1e', '#8b8880', '#3fa684', '#b23b2e'],
+    chart: {
+        style: { fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" },
+        backgroundColor: 'transparent',
+    },
+    title: { style: { color: '#1f2320', fontWeight: '700' } },
+    xAxis: {
+        lineColor: '#e4e1d9',
+        tickColor: '#e4e1d9',
+        labels: { style: { color: '#8b8880', fontSize: '12px' } },
+        title: { style: { color: '#6b6f6a' } },
+    },
+    yAxis: {
+        gridLineColor: '#edeae3',
+        labels: { style: { color: '#8b8880', fontSize: '12px' } },
+        title: { style: { color: '#6b6f6a' } },
+    },
+    legend: { itemStyle: { color: '#33362f', fontWeight: '600' }, itemHoverStyle: { color: '#0f6e56' } },
+    credits: { enabled: false },
+});
 
 //import all the 3rd party libraries
 window.Ladda = require('ladda');

@@ -43,7 +43,7 @@
             <div class="form-group has-feedback {{ $errors->has('password') ? ' has-error' : '' }}">
                 <input id="password" type="password" class="form-control" name="password"
                 value="{{ $password }}" required placeholder="@lang('lang_v1.password')">
-                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                <span class="fas fa-lock form-control-feedback"></span>
                 @if ($errors->has('password'))
                     <span class="help-block">
                         <strong>{{ $errors->first('password') }}</strong>

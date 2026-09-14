@@ -20,7 +20,7 @@
         <div class="form-group has-feedback {{ $errors->has('password') ? ' has-error' : '' }}">
             <input id="password" type="password" class="form-control" name="password"
              required placeholder="@lang('lang_v1.password')">
-            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            <span class="fas fa-lock form-control-feedback"></span>
             @if ($errors->has('password'))
                 <span class="help-block">
                     <strong>{{ $errors->first('password') }}</strong>
@@ -29,7 +29,7 @@
         </div>
         <div class="form-group has-feedback {{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
             <input id="password" type="password" class="form-control" name="password_confirmation" required placeholder="@lang('business.confirm_password')">
-            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            <span class="fas fa-lock form-control-feedback"></span>
             @if ($errors->has('password_confirmation'))
                 <span class="help-block">
                     <strong>{{ $errors->first('password_confirmation') }}</strong>

@@ -62,7 +62,7 @@
                 <div class="input-group date">
                   {!! Form::text('operation_date', @format_datetime($account_transaction->operation_date), ['class' => 'form-control', 'required','placeholder' => __( 'messages.date' ), 'id' => 'od_datetimepicker' ]); !!}
                   <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
+                    <span class="fas fa-calendar-alt"></span>
                   </span>
                 </div>
             </div>

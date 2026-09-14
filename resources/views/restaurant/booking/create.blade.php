@@ -62,7 +62,7 @@
 						{!! Form::label('status', __('restaurant.start_time') . ':*') !!}
 	            			<div class='input-group date' >
 	            			<span class="input-group-addon">
-	                    		<span class="glyphicon glyphicon-calendar"></span>
+	                    		<span class="fas fa-calendar-alt"></span>
 	                		</span>
 							{!! Form::text('booking_start', null, ['class' => 'form-control','placeholder' => __( 'restaurant.start_time' ), 'required', 'id' => 'start_time', 'readonly']); !!}
 							</div>
@@ -73,7 +73,7 @@
 							{!! Form::label('status', __('restaurant.end_time') . ':*') !!}
 	            			<div class='input-group date' >
 	            			<span class="input-group-addon">
-	                    		<span class="glyphicon glyphicon-calendar"></span>
+	                    		<span class="fas fa-calendar-alt"></span>
 	                		</span>
 							{!! Form::text('booking_end', null, ['class' => 'form-control','placeholder' => __( 'restaurant.end_time' ), 'required', 'id' => 'end_time', 'readonly']); !!}
 							</div>

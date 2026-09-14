@@ -22,7 +22,7 @@
         @yield('css')
     </head>
 
-    <body class="hold-transition lockscreen">
+    <body class="hold-transition lockscreen restaurant-layout">
         <div class="wrapper">
             <script type="text/javascript">
                 if(localStorage.getItem("upos_sidebar_collapse") == 'true'){

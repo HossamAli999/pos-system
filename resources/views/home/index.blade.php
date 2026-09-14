@@ -31,7 +31,7 @@
         @if($is_admin)
             <div class="stat-grid">
                 <div class="stat-card">
-                    <span class="stat-card__icon stat-card__icon--info"><i class="ion ion-ios-cart-outline"></i></span>
+                    <span class="stat-card__icon stat-card__icon--info"><i class="fas fa-shopping-cart"></i></span>
                     <div class="stat-card__body">
                         <span class="stat-card__label">{{ __('home.total_sell') }}</span>
                         <span class="stat-card__value total_sell"><i class="fas fa-sync fa-spin fa-fw"></i></span>
@@ -39,7 +39,7 @@
                 </div>
 
                 <div class="stat-card">
-                    <span class="stat-card__icon stat-card__icon--success"><i class="ion ion-ios-paper-outline"></i></span>
+                    <span class="stat-card__icon stat-card__icon--success"><i class="fas fa-file-invoice"></i></span>
                     <div class="stat-card__body">
                         <span class="stat-card__label">{{ __('lang_v1.net') }} @show_tooltip(__('lang_v1.net_home_tooltip'))</span>
                         <span class="stat-card__value net"><i class="fas fa-sync fa-spin fa-fw"></i></span>
@@ -47,7 +47,7 @@
                 </div>
 
                 <div class="stat-card">
-                    <span class="stat-card__icon stat-card__icon--warning"><i class="ion ion-ios-paper-outline"></i></span>
+                    <span class="stat-card__icon stat-card__icon--warning"><i class="fas fa-file-invoice"></i></span>
                     <div class="stat-card__body">
                         <span class="stat-card__label">{{ __('home.invoice_due') }}</span>
                         <span class="stat-card__value invoice_due"><i class="fas fa-sync fa-spin fa-fw"></i></span>
@@ -65,7 +65,7 @@
                 </div>
 
                 <div class="stat-card">
-                    <span class="stat-card__icon stat-card__icon--info"><i class="ion ion-cash"></i></span>
+                    <span class="stat-card__icon stat-card__icon--info"><i class="fas fa-money-bill-wave"></i></span>
                     <div class="stat-card__body">
                         <span class="stat-card__label">{{ __('home.total_purchase') }}</span>
                         <span class="stat-card__value total_purchase"><i class="fas fa-sync fa-spin fa-fw"></i></span>

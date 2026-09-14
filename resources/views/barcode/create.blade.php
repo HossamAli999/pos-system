@@ -50,7 +50,7 @@
              {!! Form::label('top_margin', __('barcode.top_margin') . ' ('. __('barcode.in_in') . '):*') !!}
             <div class="input-group">
               <span class="input-group-addon">
-                <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+                <span class="fas fa-arrow-up" aria-hidden="true"></span>
               </span>
               {!! Form::number('top_margin', 0, ['class' => 'form-control',
               'placeholder' => __('barcode.top_margin'), 'min' => 0, 'step' => 0.00001, 'required']); !!}
@@ -62,7 +62,7 @@
             {!! Form::label('left_margin', __('barcode.left_margin') . ' ('. __('barcode.in_in') . '):*') !!}
             <div class="input-group">
               <span class="input-group-addon">
-                <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                <span class="fas fa-arrow-left" aria-hidden="true"></span>
               </span>
               {!! Form::number('left_margin', 0, ['class' => 'form-control',
               'placeholder' => __('barcode.left_margin'), 'min' => 0, 'step' => 0.00001, 'required']); !!}
@@ -137,7 +137,7 @@
             {!! Form::label('row_distance', __('barcode.row_distance') . ' ('. __('barcode.in_in') . '):*') !!}
             <div class="input-group">
               <span class="input-group-addon">
-                <span class="glyphicon glyphicon-resize-vertical" aria-hidden="true"></span>
+                <span class="fas fa-arrows-alt-v" aria-hidden="true"></span>
               </span>
               {!! Form::number('row_distance', 0, ['class' => 'form-control',
               'placeholder' => __('barcode.row_distance'), 'min' => 0, 'step' => 0.00001, 'required']); !!}
@@ -149,7 +149,7 @@
             {!! Form::label('col_distance', __('barcode.col_distance') . ' ('. __('barcode.in_in') . '):*') !!}
              <div class="input-group">
               <span class="input-group-addon">
-                <span class="glyphicon glyphicon-resize-horizontal" aria-hidden="true"></span>
+                <span class="fas fa-arrows-alt-h" aria-hidden="true"></span>
               </span>
               {!! Form::number('col_distance', 0, ['class' => 'form-control',
               'placeholder' => __('barcode.col_distance'), 'min' => 0, 'step' => 0.00001, 'required']); !!}

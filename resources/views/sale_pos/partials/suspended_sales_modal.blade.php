@@ -64,7 +64,7 @@
 						<div class="clearfix"></div>
 					@endif
 				@empty
-					<p class="text-center">@lang('purchase.no_records_found')</p>
+					@include('components.empty_state', ['icon' => 'fas fa-pause-circle'])
 				@endforelse
 			</div>
 		</div>

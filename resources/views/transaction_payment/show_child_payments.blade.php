@@ -25,7 +25,7 @@
     </tr>
   @empty
     <tr class="text-center">
-      <td colspan="6">@lang('purchase.no_records_found')</td>
+      <td colspan="6">@include('components.empty_state', ['icon' => 'fas fa-money-bill-wave'])</td>
     </tr>
   @endforelse
 </table>

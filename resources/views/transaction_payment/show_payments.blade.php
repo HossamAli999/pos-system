@@ -191,7 +191,7 @@
                               @if((auth()->user()->can('edit_purchase_payment') && (in_array($transaction->type, ['purchase', 'purchase_return']))) || (auth()->user()->can('edit_sell_payment') && (in_array($transaction->type, ['sell', 'sell_return']))) || ((auth()->user()->can('all_expense.access') || auth()->user()->can('view_own_expense')) && $transaction->type == 'expense') )
                                     @if($payment->method != 'advance')
                                         <button type="button" class="btn btn-info btn-xs edit_payment" 
-                                    data-href="{{action([\App\Http\Controllers\TransactionPaymentController::class, 'edit'], [$payment->id]) }}"><i class="glyphicon glyphicon-edit"></i></button>
+                                    data-href="{{action([\App\Http\Controllers\TransactionPaymentController::class, 'edit'], [$payment->id]) }}"><i class="fas fa-edit"></i></button>
                                     @endif
                                 @endif
 
@@ -217,7 +217,7 @@
                             </tr>
                         @empty
                             <tr class="text-center">
-                              <td colspan="6">@lang('purchase.no_records_found')</td>
+                              <td colspan="6">@include('components.empty_state', ['icon' => 'fas fa-money-bill-wave'])</td>
                             </tr>
                         @endforelse
                         </table>

@@ -54,7 +54,7 @@
     @empty
         <tr>
           <td colspan="4" class="text-center">
-            @lang('purchase.no_records_found')
+            @include('components.empty_state', ['icon' => 'fas fa-history'])
           </td>
         </tr>
     @endforelse

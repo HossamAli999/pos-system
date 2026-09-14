@@ -244,6 +244,31 @@ $(document).ready(function () {
         },
     });
 
+    //Skeleton loader for any DataTable with processing:true enabled — one
+    //shared handler instead of per-page markup/JS, since DataTables fires
+    //processing.dt on every table that has the option turned on regardless
+    //of which page it's on.
+    $(document).on('processing.dt', function (e, settings, processing) {
+        var $wrapper = $(settings.nTableWrapper);
+        var $table = $(settings.nTable);
+        if (processing) {
+            if ($wrapper.find('> .dt-skeleton').length === 0) {
+                var $skeleton = $('<div class="dt-skeleton"></div>');
+                var cols = $table.find('thead th').length || 5;
+                for (var r = 0; r < 6; r++) {
+                    var $row = $('<div class="dt-skeleton__row"></div>');
+                    for (var c = 0; c < cols; c++) {
+                        $row.append('<span class="dt-skeleton__cell"></span>');
+                    }
+                    $skeleton.append($row);
+                }
+                $wrapper.css('position', 'relative').append($skeleton);
+            }
+        } else {
+            $wrapper.find('> .dt-skeleton').remove();
+        }
+    });
+
     if ($('input#iraqi_selling_price_adjustment').length > 0) {
         iraqi_selling_price_adjustment = true;
     } else {

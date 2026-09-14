@@ -1,43 +1,50 @@
 // ============================================================
 // Modern design system — overrides AdminLTE 2 / Bootstrap 3
 // Loaded last (app.css loads after vendor.css) so it wins.
+//
+// "Quiet ledger" direction: warm stone/graphite neutrals + a single
+// deep-teal accent, tight radii, border-driven hierarchy instead of
+// shadow depth. Variable names below are unchanged from the prior
+// (indigo/slate) direction on purpose — every component further down
+// this file consumes these same custom properties, so swapping the
+// values here is what repaints the whole app in one place.
 // ============================================================
 
 :root {
-    --brand-50:  #eef2ff;
-    --brand-100: #e0e7ff;
-    --brand-200: #c7d2fe;
-    --brand-400: #818cf8;
-    --brand-500: #6366f1;
-    --brand-600: #4f46e5;
-    --brand-700: #4338ca;
+    --brand-50:  #e1f5ee;
+    --brand-100: #c5ebde;
+    --brand-200: #9fdcc7;
+    --brand-400: #3fa684;
+    --brand-500: #229272;
+    --brand-600: #0f6e56;
+    --brand-700: #0a5443;
 
-    --ink-900: #0f172a;
-    --ink-800: #1e293b;
-    --ink-700: #334155;
-    --ink-600: #475569;
-    --ink-500: #64748b;
-    --ink-400: #94a3b8;
-    --ink-300: #cbd5e1;
-    --ink-200: #e2e8f0;
-    --ink-100: #f1f5f9;
-    --ink-50:  #f8fafc;
+    --ink-900: #1f2320;
+    --ink-800: #33362f;
+    --ink-700: #4a4d48;
+    --ink-600: #6b6f6a;
+    --ink-500: #8b8880;
+    --ink-400: #b4b2a9;
+    --ink-300: #cfcbc0;
+    --ink-200: #e4e1d9;
+    --ink-100: #edeae3;
+    --ink-50:  #f7f5f1;
 
-    --ok: #10b981;
-    --ok-bg: #ecfdf5;
-    --warn: #f59e0b;
-    --warn-bg: #fffbeb;
-    --bad: #ef4444;
-    --bad-bg: #fef2f2;
-    --info: #0ea5e9;
-    --info-bg: #f0f9ff;
+    --ok: #2e7d5b;
+    --ok-bg: #eaf5ef;
+    --warn: #b57a1e;
+    --warn-bg: #fbf2e3;
+    --bad: #b23b2e;
+    --bad-bg: #fbebe9;
+    --info: #3178a6;
+    --info-bg: #eaf3f9;
 
-    --radius-sm: 6px;
-    --radius: 10px;
-    --radius-lg: 16px;
-    --shadow-sm: 0 1px 2px rgba(15, 23, 42, .06);
-    --shadow: 0 1px 3px rgba(15, 23, 42, .06), 0 6px 16px rgba(15, 23, 42, .06);
-    --shadow-lg: 0 20px 40px rgba(15, 23, 42, .12);
+    --radius-sm: 4px;
+    --radius: 6px;
+    --radius-lg: 10px;
+    --shadow-sm: 0 1px 2px rgba(31, 35, 32, .05);
+    --shadow: 0 1px 2px rgba(31, 35, 32, .05), 0 4px 10px rgba(31, 35, 32, .05);
+    --shadow-lg: 0 10px 24px rgba(31, 35, 32, .10);
     --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
@@ -212,7 +219,7 @@ body[class*="skin-"] .main-sidebar { background: var(--ink-900) !important; }
     font-size: 13px;
     padding: 9px 16px;
     border-radius: var(--radius-sm);
-    box-shadow: 0 4px 10px rgba(79, 70, 229, .25);
+    box-shadow: 0 4px 10px rgba(15, 110, 86, .25);
 }
 .header-pos-btn:hover { filter: brightness(.95); text-decoration: none; color: #fff !important; }
 
@@ -466,7 +473,7 @@ body[class*="skin-"] .sidebar-menu > li.menu-open > a {
 body[class*="skin-"] .sidebar-menu > li.active > a {
     background: var(--brand-600) !important;
     color: #fff !important;
-    box-shadow: 0 4px 10px rgba(79, 70, 229, .35);
+    box-shadow: 0 4px 10px rgba(15, 110, 86, .35);
 }
 body[class*="skin-"] .sidebar-menu > li.active > a > .fa,
 body[class*="skin-"] .sidebar-menu > li.active > a > .ion { color: #fff !important; }
@@ -660,6 +667,23 @@ body[class*="skin-"] .content-wrapper .content-header-custom a {
 .btn-danger  { background: var(--bad) !important; border-color: var(--bad) !important; }
 .btn-warning { background: var(--warn) !important; border-color: var(--warn) !important; color: #fff !important; }
 .btn-info    { background: var(--info) !important; border-color: var(--info) !important; }
+.text-info   { color: var(--info) !important; }
+
+// ---------- restaurant layout (layouts.restaurant + header/footer-restaurant
+// partials) — no body[class*="skin-"] here, so it inherits none of the main
+// chrome styling; give it the same warm-stone page background at minimum.
+// body.restaurant-layout added directly on <body> for this one targeting hook. ----------
+body.restaurant-layout { background: var(--ink-50); }
+body.restaurant-layout footer {
+    padding: 14px 0;
+    color: var(--ink-500) !important;
+    b { font-weight: 600; }
+}
+body.restaurant-layout .box {
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 .btn-app {
     border-radius: var(--radius);
@@ -727,8 +751,81 @@ textarea.form-control { height: auto; }
     box-shadow: var(--shadow);
 }
 
-// checkboxes / icheck squares
-.icheckbox_square-blue, .iradio_square-blue { }
+// checkboxes / icheck squares — icheck's stock skin is a sprite PNG
+// (blue.png, offset via background-position per state), so it can't be
+// recolored with a background-color tweak; redraw it in CSS instead.
+.icheckbox_square-blue, .iradio_square-blue {
+    background-image: none !important;
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid var(--ink-300);
+    background-color: #fff;
+    border-radius: var(--radius-sm);
+    position: relative;
+    transition: background-color .12s ease, border-color .12s ease;
+}
+.iradio_square-blue { border-radius: 50%; }
+.icheckbox_square-blue.hover, .iradio_square-blue.hover { border-color: var(--brand-400); }
+.icheckbox_square-blue.checked, .iradio_square-blue.checked {
+    background-color: var(--brand-600);
+    border-color: var(--brand-600);
+}
+.icheckbox_square-blue.checked::after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 2px;
+    width: 5px;
+    height: 9px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+.iradio_square-blue.checked::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 6px;
+    height: 6px;
+    background: #fff;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+.icheckbox_square-blue.disabled, .iradio_square-blue.disabled {
+    background-color: var(--ink-100) !important;
+    border-color: var(--ink-200) !important;
+    cursor: default;
+}
+.icheckbox_square-blue.checked.disabled, .iradio_square-blue.checked.disabled {
+    background-color: var(--ink-300) !important;
+    border-color: var(--ink-300) !important;
+}
+
+// ---------- permission matrix (role/partials/module_permissions.blade.php)
+// .check_group per module — CSS only, checkbox markup/JS untouched ----------
+.check_group {
+    background: #fff;
+    border: 1px solid var(--ink-200);
+    border-radius: var(--radius-lg);
+    padding: 18px 20px;
+    margin: 0 0 12px;
+
+    h4 {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--ink-900);
+        margin: 0;
+    }
+    .checkbox {
+        margin: 6px 0;
+        label { font-size: 13px; color: var(--ink-700); font-weight: 500; }
+    }
+}
+// module_permissions.blade.php puts an <hr> before/between .check_group rows
+// and inside each group after an end_group item — both redundant now that
+// groups are their own bordered cards.
+.check_group + hr, .check_group hr { display: none; }
 
 // ---------- tables ----------
 .table {
@@ -783,8 +880,240 @@ div.dataTables_wrapper div.dataTables_length select {
     border-color: var(--brand-600);
 }
 
+// ---------- avatars — 3 distinct contexts unified visually (not merged into
+// one markup pattern, since components/avatar.blade.php is a small avatar-
+// stack list, while manage_user/show + user/profile show one large profile
+// photo — different UI, same visual language): ----------
+.user_avatar {
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 1px var(--ink-200);
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    object-fit: cover;
+}
+.img-circle, .profile-user-img {
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 1px var(--ink-200);
+    border-radius: 50%;
+}
+
+// ---------- loading states ----------
+// Ladda is "themeless" on purpose (see app.scss) — its spinner reads the
+// button's own computed text color, so it already matches our .btn styles
+// with no extra CSS. Only the progress-bar sweep needs a token-based color.
+.ladda-button .ladda-progress { background: rgba(255, 255, 255, .25); }
+.btn-default.ladda-button .ladda-progress,
+.btn-secondary.ladda-button .ladda-progress { background: rgba(31, 35, 32, .1); }
+
+// DataTables' own "Processing..." box is superseded by the skeleton overlay
+// below (same processing.dt event, one shared handler in common.js) — hide
+// it rather than styling two competing loading indicators.
+div.dataTables_wrapper div.dataTables_processing { display: none; }
+
+.dt-skeleton {
+    position: absolute;
+    inset: 0;
+    top: 40px; // leave the table header visible
+    background: #fff;
+    padding: 4px 0;
+    z-index: 2;
+    overflow: hidden;
+}
+.dt-skeleton__row {
+    display: flex;
+    gap: 16px;
+    padding: 13px 16px;
+    border-bottom: 1px solid var(--ink-100);
+}
+.dt-skeleton__cell {
+    flex: 1;
+    height: 12px;
+    border-radius: var(--radius-sm);
+    background: linear-gradient(90deg, var(--ink-100) 25%, var(--ink-50) 37%, var(--ink-100) 63%);
+    background-size: 400% 100%;
+    animation: dt-skeleton-shimmer 1.4s ease infinite;
+}
+.dt-skeleton__row:nth-child(even) .dt-skeleton__cell { flex: 1.4; }
+@keyframes dt-skeleton-shimmer {
+    0% { background-position: 100% 50%; }
+    100% { background-position: 0 50%; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .dt-skeleton__cell { animation: none; }
+}
+
+// ---------- TinyMCE editor (product description) — its "oxide" skin ships
+// as compiled CSS with hardcoded colors, no custom-property hooks, so this
+// overrides the .tox-* classes directly rather than rebuilding the skin. ----------
+.tox-tinymce {
+    border-color: var(--ink-200) !important;
+    border-radius: var(--radius) !important;
+}
+.tox .tox-toolbar,
+.tox .tox-toolbar__primary,
+.tox .tox-toolbar-overlord,
+.tox .tox-menubar {
+    background: var(--ink-50) !important;
+}
+.tox .tox-toolbar__group { border-color: var(--ink-200) !important; }
+.tox .tox-tbtn:hover, .tox .tox-mbtn:hover {
+    background: var(--ink-100) !important;
+}
+.tox .tox-tbtn--enabled, .tox .tox-tbtn--enabled:hover {
+    background: var(--brand-50) !important;
+    color: var(--brand-700) !important;
+}
+.tox .tox-statusbar {
+    background: var(--ink-50) !important;
+    border-color: var(--ink-200) !important;
+    color: var(--ink-500) !important;
+}
+.tox .tox-edit-area__iframe { background: #fff !important; }
+
+// ---------- business settings tab chrome (business/settings.blade.php,
+// .pos-tab-* classes; JS in common.js toggles .active — CSS only here) ----------
+// Deliberately NOT display:flex here — .pos-tab-menu/.pos-tab are Bootstrap
+// col-lg-2/col-lg-10 with their own float+percentage-width+gutter system;
+// only style their contents, don't touch the parent's layout mode.
+.pos-tab-menu {
+    position: sticky;
+    top: 76px;
+    .list-group {
+        background: #fff;
+        border: 1px solid var(--ink-200);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        margin-bottom: 0;
+    }
+    .list-group-item {
+        border: none;
+        border-bottom: 1px solid var(--ink-100);
+        border-radius: 0 !important;
+        color: var(--ink-700);
+        font-weight: 600;
+        font-size: 13px;
+        padding: 12px 14px;
+        text-align: left;
+        transition: background .12s ease, color .12s ease;
+
+        &:last-child { border-bottom: none; }
+        &:hover { background: var(--ink-50); color: var(--ink-900); }
+        &.active, &.active:hover, &.active:focus {
+            background: var(--brand-50);
+            color: var(--brand-700);
+            border-left: 3px solid var(--brand-600);
+            padding-left: 11px;
+        }
+    }
+}
+.pos-tab {
+    flex: 1;
+    min-width: 0;
+    background: #fff;
+    border: 1px solid var(--ink-200);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+}
+// The click handler (common.js) already toggles .active on the right
+// .pos-tab-content in sync with the menu — but no rule anywhere ever hid the
+// inactive ones, so every settings section has always rendered stacked and
+// visible at once. That's the actual bug behind "tabs" that don't look like
+// they switch; fixing visibility is CSS-only, no JS/markup change needed.
+.pos-tab-content { display: none; }
+.pos-tab-content.active { display: block; }
+.pos-tab-content h4 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink-900);
+    margin: 28px 0 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--ink-100);
+
+    &:first-child { margin-top: 0; }
+}
+
+// ---------- calendar (home/calendar.blade.php, FullCalendar) ----------
+.fc-toolbar h2 { font-size: 18px; font-weight: 700; color: var(--ink-900); }
+.fc-button {
+    background: #fff !important;
+    border: 1px solid var(--ink-200) !important;
+    color: var(--ink-700) !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+    text-transform: capitalize;
+}
+.fc-button:hover { background: var(--ink-50) !important; }
+.fc-button.fc-state-active, .fc-button.fc-state-active:hover {
+    background: var(--brand-600) !important;
+    border-color: var(--brand-600) !important;
+    color: #fff !important;
+}
+.fc-today { background: var(--brand-50) !important; }
+.fc-widget-header { background: var(--ink-50); }
+
+// ---------- dashboard configurator (dashboard_configurator/edit.blade.php)
+// — overrides the page's own inline <style> block (palegreen/red debug
+// colors) with tokens; not reachable in this session to verify live
+// (permission-gated / no linked entry point for the test account used), so
+// double-check visually once accessible. ----------
+.draggable {
+    background-color: var(--brand-50) !important;
+    border: 1px solid var(--brand-200) !important;
+    border-radius: var(--radius-sm);
+    color: var(--brand-700);
+    font-weight: 600;
+    font-size: 12px;
+}
+.cell, .row_option > div {
+    border: 1px solid var(--ink-200) !important;
+    border-radius: var(--radius-sm);
+    background: var(--ink-50);
+}
+.ui-droppable-hover {
+    border: 2px dashed var(--brand-500) !important;
+    background: var(--brand-50);
+}
+.row_option:hover { opacity: 1; background: var(--ink-100); }
+.sortable-placeholder {
+    border: 1px dashed var(--brand-400) !important;
+    background-color: var(--brand-50) !important;
+}
+.border-1px-173 { border: 1px solid var(--ink-200) !important; }
+
+// ---------- empty states (components/empty_state.blade.php + DataTables'
+// own emptyTable/zeroRecords row) ----------
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 16px;
+    text-align: center;
+}
+.empty-state__icon {
+    font-size: 28px;
+    color: var(--ink-300);
+    margin-bottom: 10px;
+}
+.empty-state__text {
+    color: var(--ink-500);
+    font-size: 13px;
+    margin: 0;
+}
+table.dataTable tr.odd td.dataTables_empty,
+table.dataTable tr.even td.dataTables_empty,
+td.dataTables_empty {
+    color: var(--ink-500);
+    padding: 32px 16px !important;
+    font-size: 13px;
+}
+
 // ---------- badges / labels ----------
-.label {
+// .badge aliased to .label's visual treatment on purpose (both exist in the
+// app, 35 vs 5 uses) — one shared look instead of two slightly different pill
+// styles. Background variants (.bg-green etc.) already apply to either.
+.label, .badge {
     border-radius: 999px;
     font-weight: 600;
     padding: .3em .7em;
@@ -794,7 +1123,6 @@ div.dataTables_wrapper div.dataTables_length select {
 .label-danger,  .bg-red { background: var(--bad) !important; }
 .label-warning, .bg-yellow { background: var(--warn) !important; }
 .label-info,    .bg-aqua { background: var(--info) !important; }
-.badge { border-radius: 999px; background: var(--brand-600); }
 
 // ---------- alerts / callouts / toastr ----------
 .alert {
@@ -802,10 +1130,10 @@ div.dataTables_wrapper div.dataTables_length select {
     border-radius: var(--radius);
     border-left: 4px solid transparent;
 }
-.alert-success { background: var(--ok-bg); color: #065f46; border-left-color: var(--ok); }
-.alert-danger, .alert-error { background: var(--bad-bg); color: #991b1b; border-left-color: var(--bad); }
-.alert-warning { background: var(--warn-bg); color: #92400e; border-left-color: var(--warn); }
-.alert-info { background: var(--info-bg); color: #075985; border-left-color: var(--info); }
+.alert-success { background: var(--ok-bg); color: #1e5138; border-left-color: var(--ok); }
+.alert-danger, .alert-error { background: var(--bad-bg); color: #7a281f; border-left-color: var(--bad); }
+.alert-warning { background: var(--warn-bg); color: #7a5314; border-left-color: var(--warn); }
+.alert-info { background: var(--info-bg); color: #204f6d; border-left-color: var(--info); }
 
 .callout {
     border-radius: var(--radius);
@@ -836,6 +1164,50 @@ div.dataTables_wrapper div.dataTables_length select {
     border-top: 1px solid var(--ink-100);
     padding: 16px 24px;
 }
+
+// ---------- confirmation dialogs (vendored "sweetalert" — t4t5/sweetalert,
+// swal-* classes, not SweetAlert2). It self-injects its own <style> tag at
+// runtime after vendor.js loads, so these overrides use !important to win
+// regardless of DOM insertion order. ----------
+.swal-overlay { background: rgba(31, 35, 32, .45) !important; }
+.swal-modal {
+    border-radius: var(--radius-lg) !important;
+    box-shadow: var(--shadow-lg) !important;
+}
+.swal-title {
+    color: var(--ink-900) !important;
+    font-family: var(--font) !important;
+    font-weight: 700 !important;
+}
+.swal-text {
+    color: var(--ink-600) !important;
+    font-family: var(--font) !important;
+}
+.swal-footer { text-align: center !important; }
+.swal-button {
+    background: var(--brand-600) !important;
+    border-radius: var(--radius-sm) !important;
+    font-family: var(--font) !important;
+    font-weight: 600 !important;
+    box-shadow: none !important;
+}
+.swal-button:hover { background: var(--brand-700) !important; }
+.swal-button:focus { box-shadow: 0 0 0 3px var(--brand-100) !important; }
+.swal-button--cancel {
+    background: var(--ink-100) !important;
+    color: var(--ink-700) !important;
+}
+.swal-button--cancel:hover { background: var(--ink-200) !important; }
+.swal-button--danger { background: var(--bad) !important; }
+.swal-button--danger:hover { filter: brightness(.9); }
+.swal-icon--success { border-color: var(--ok) !important; }
+.swal-icon--success__ring { border-color: rgba(46, 125, 91, .2) !important; }
+.swal-icon--success__line { background: var(--ok) !important; }
+.swal-icon--error { border-color: var(--bad) !important; }
+.swal-icon--error__line { background: var(--bad) !important; }
+.swal-icon--warning { border-color: var(--warn) !important; }
+.swal-icon--warning__body, .swal-icon--warning__dot { background: var(--warn) !important; }
+.swal-icon--info { border-color: var(--info) !important; }
 
 // ---------- tabs ----------
 .nav-tabs {
@@ -1130,8 +1502,8 @@ body.lockscreen { background: var(--ink-50); }
     justify-content: center;
     padding: 48px;
     background:
-        radial-gradient(circle at 15% 20%, rgba(99,102,241,.35), transparent 45%),
-        radial-gradient(circle at 85% 80%, rgba(79,70,229,.35), transparent 45%),
+        radial-gradient(circle at 15% 20%, rgba(34,146,114,.35), transparent 45%),
+        radial-gradient(circle at 85% 80%, rgba(10,84,67,.35), transparent 45%),
         var(--ink-900);
 }
 .auth-shell__brand-inner { max-width: 340px; color: #fff; }
@@ -1179,7 +1551,7 @@ body.lockscreen { background: var(--ink-50); }
         width: 22px;
         height: 22px;
         border-radius: 999px;
-        background: rgba(99,102,241,.25);
+        background: rgba(34,146,114,.25);
         color: var(--brand-400);
         display: inline-flex;
         align-items: center;
@@ -1537,7 +1909,7 @@ hr { border-top: 1px solid var(--ink-100); }
 .hero__btn-primary {
     background: var(--brand-600);
     color: #fff !important;
-    box-shadow: 0 10px 25px rgba(79, 70, 229, .3);
+    box-shadow: 0 10px 25px rgba(15, 110, 86, .3);
 }
 .hero__btn-primary:hover { filter: brightness(.95); text-decoration: none; color: #fff !important; }
 .hero__btn-secondary {
@@ -1628,4 +2000,33 @@ hr { border-top: 1px solid var(--ink-100); }
     color: var(--ink-400);
     font-size: 13px;
     border-top: 1px solid var(--ink-100);
+}
+
+// ============================================================
+// RTL overrides — public/css/rtl.css (AdminLTE.rtl + bootstrap.rtl)
+// loads before app.css, so it already mirrors AdminLTE/Bootstrap's own
+// classes correctly; everything below is CSS added by this redesign that
+// rtl.css has no rules for, so left/right-only properties need an explicit
+// flip here. Scoped with html[dir="rtl"] to match this app's own dir switch
+// (layouts/*.blade.php), not the prefers-based selectors artifact pages use.
+// ============================================================
+html[dir="rtl"] {
+    .pos-tab-menu .list-group-item {
+        text-align: right;
+
+        &.active, &.active:hover, &.active:focus {
+            border-left: none;
+            border-right: 3px solid var(--brand-600);
+            padding-right: 11px;
+            padding-left: 14px;
+        }
+    }
+    .alert, .callout {
+        border-left: none;
+        border-right: 4px solid transparent;
+    }
+    .alert-success { border-right-color: var(--ok); border-left-color: transparent; }
+    .alert-danger, .alert-error { border-right-color: var(--bad); border-left-color: transparent; }
+    .alert-warning { border-right-color: var(--warn); border-left-color: transparent; }
+    .alert-info { border-right-color: var(--info); border-left-color: transparent; }
 }

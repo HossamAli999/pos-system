@@ -127,7 +127,7 @@ body[class*="skin-"] .main-header .navbar,
 body[class*="skin-"] .main-header {
     background: #fff !important;
 }
-body[class*="skin-"] .main-sidebar { background: var(--ink-900) !important; }
+body[class*="skin-"] .main-sidebar { background: #fff !important; }
 
 // the brand now lives inline in the header toolbar (not a separate fixed
 // AdminLTE logo column), so reclaim that column's width.
@@ -313,20 +313,22 @@ body[class*="skin-"] .main-sidebar { background: var(--ink-900) !important; }
     }
 }
 
-// ---------- sidebar ----------
+// ---------- sidebar (white, per direction change from the original dark
+// "Quiet ledger" sidebar) ----------
 .main-sidebar {
-    background: var(--ink-900);
-    box-shadow: var(--shadow);
+    background: #fff;
+    border-right: 1px solid var(--ink-100);
+    box-shadow: none;
 }
 .sidebar { padding-bottom: 24px; }
 
 .main-sidebar .logo,
 .main-sidebar .logo:hover {
-    background: var(--ink-900) !important;
-    color: #fff !important;
+    background: #fff !important;
+    color: var(--ink-900) !important;
     font-weight: 700;
     letter-spacing: -.01em;
-    border-bottom: 1px solid rgba(255,255,255,.06);
+    border-bottom: 1px solid var(--ink-100);
     display: flex;
     align-items: center;
     gap: 10px;
@@ -363,12 +365,12 @@ body[class*="skin-"] .main-sidebar { background: var(--ink-900) !important; }
     margin: 12px 10px 4px;
     padding: 10px;
     border-radius: var(--radius-sm);
-    color: var(--ink-400);
-    border-top: 1px solid rgba(255,255,255,.06);
+    color: var(--ink-500);
+    border-top: 1px solid var(--ink-100);
 }
 .sidebar-collapse-toggle:hover {
-    background: rgba(255,255,255,.06);
-    color: #fff;
+    background: var(--ink-50);
+    color: var(--ink-900);
     text-decoration: none;
 }
 .sidebar-collapse .sidebar-collapse-toggle i { transform: rotate(180deg); }
@@ -387,17 +389,17 @@ body[class*="skin-"] .main-sidebar { background: var(--ink-900) !important; }
     }
     input {
         width: 100%;
-        background: rgba(255,255,255,.06);
-        border: 1px solid rgba(255,255,255,.08);
+        background: var(--ink-50);
+        border: 1px solid var(--ink-200);
         border-radius: var(--radius-sm);
-        color: #fff;
+        color: var(--ink-800);
         font-size: 13px;
         padding: 8px 12px 8px 30px;
 
         &::placeholder { color: var(--ink-400); }
         &:focus {
             outline: none;
-            background: rgba(255,255,255,.1);
+            background: #fff;
             border-color: var(--brand-500);
         }
     }
@@ -421,7 +423,7 @@ body[class*="skin-"] .main-sidebar { background: var(--ink-900) !important; }
 
 .sidebar-menu > li.header {
     background: transparent !important;
-    color: var(--ink-400) !important;
+    color: var(--ink-500) !important;
     font-size: 11px;
     font-weight: 700;
     letter-spacing: .08em;
@@ -431,10 +433,10 @@ body[class*="skin-"] .main-sidebar { background: var(--ink-900) !important; }
 
 // body[class*="skin-"] prefix: the original theme has `.skin-blue-light
 // .sidebar a { color: #444 }` (and similar per other -light skins) at higher
-// specificity than a plain `.sidebar-menu > li > a` selector, which made
-// every sidebar label render dark-gray-on-dark-navy — nearly illegible.
+// specificity than a plain `.sidebar-menu > li > a` selector, so every state
+// below is prefixed the same way to guarantee it wins regardless of skin.
 body[class*="skin-"] .sidebar-menu > li > a {
-    color: var(--ink-300) !important;
+    color: var(--ink-700) !important;
     margin: 2px 10px;
     border-radius: var(--radius-sm);
     border-left: none !important;
@@ -449,7 +451,7 @@ body[class*="skin-"] .treeview-menu > li > a > .fa,
 body[class*="skin-"] .treeview-menu > li > a > .glyphicon,
 body[class*="skin-"] .treeview-menu > li > a > .ion {
     width: 22px;
-    color: var(--ink-400) !important;
+    color: var(--ink-500) !important;
 }
 
 // The original theme carries a per-skin rule (`.skin-blue-light .sidebar-menu
@@ -460,8 +462,8 @@ body[class*="skin-"] .treeview-menu > li > a > .ion {
 // skin-* class) so ours wins outright rather than relying on source order.
 body[class*="skin-"] .sidebar-menu > li:hover > a,
 body[class*="skin-"] .sidebar-menu > li.menu-open > a {
-    background: rgba(255,255,255,.06) !important;
-    color: #fff !important;
+    background: var(--ink-50) !important;
+    color: var(--ink-900) !important;
 }
 .sidebar-menu > li .pull-right-container i {
     transition: transform .15s ease;
@@ -473,28 +475,28 @@ body[class*="skin-"] .sidebar-menu > li.menu-open > a {
 body[class*="skin-"] .sidebar-menu > li.active > a {
     background: var(--brand-600) !important;
     color: #fff !important;
-    box-shadow: 0 4px 10px rgba(15, 110, 86, .35);
+    box-shadow: 0 4px 10px rgba(15, 110, 86, .25);
 }
 body[class*="skin-"] .sidebar-menu > li.active > a > .fa,
 body[class*="skin-"] .sidebar-menu > li.active > a > .ion { color: #fff !important; }
 
 body[class*="skin-"] .sidebar-menu > li > .treeview-menu {
-    background: rgba(0,0,0,.15) !important;
+    background: var(--ink-50) !important;
     border-radius: var(--radius-sm);
     margin: 0 10px;
 }
 body[class*="skin-"] .sidebar-menu .treeview-menu > li > a {
-    color: var(--ink-400) !important;
+    color: var(--ink-600) !important;
     padding: 8px 12px 8px 40px;
     border-radius: var(--radius-sm);
 }
 body[class*="skin-"] .sidebar-menu .treeview-menu > li > a:hover,
 body[class*="skin-"] .sidebar-menu .treeview-menu > li.active > a {
-    color: #fff !important;
-    background: rgba(255,255,255,.08) !important;
+    color: var(--ink-900) !important;
+    background: var(--ink-100) !important;
 }
 
-.sidebar-form { border-color: rgba(255,255,255,.1) !important; }
+.sidebar-form { border-color: var(--ink-200) !important; }
 
 // ---------- content area ----------
 .content-wrapper {

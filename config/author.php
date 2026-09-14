@@ -13,5 +13,6 @@ return [
     |
     */
 
-    'app_version' => '5.22',
+    'app_version' => '1.0.0',
+    
 ];

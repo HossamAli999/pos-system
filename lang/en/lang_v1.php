@@ -1554,4 +1554,6 @@ return [
     'pricing_and_type' => 'Pricing & Type',
     'no_menu_results_found' => 'No menu items found',
     'connection_status' => 'Connection status',
+    'purchase_items' => 'Purchase Items',
+    'discount_tax_and_notes' => 'Discount, Tax & Notes',
 ];

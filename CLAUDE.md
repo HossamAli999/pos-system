@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project overview
 
-This is a Laravel 9 multi-tenant POS / inventory / accounting system (an UltimatePOS-derived codebase). One installation serves many independent `business` tenants (shops), each with its own locations, users, products, and transactions. The core app ships without the paid add-ons — code that depends on them (Superadmin/SaaS billing, WooCommerce, Repair, Essentials/HRM, Manufacturing, etc.) lives under an optional `Modules/` directory (via `nwidart/laravel-modules`) that is **not present** in this checkout; such code paths are guarded at runtime with `Module::has('Superadmin')` etc., so don't assume a module's classes/routes exist.
+This is a Laravel 9 multi-tenant POS / inventory / accounting system (an POS-derived codebase). One installation serves many independent `business` tenants (shops), each with its own locations, users, products, and transactions. The core app ships without the paid add-ons — code that depends on them (Superadmin/SaaS billing, WooCommerce, Repair, Essentials/HRM, Manufacturing, etc.) lives under an optional `Modules/` directory (via `nwidart/laravel-modules`) that is **not present** in this checkout; such code paths are guarded at runtime with `Module::has('Superadmin')` etc., so don't assume a module's classes/routes exist.
 
 ## Commands
 

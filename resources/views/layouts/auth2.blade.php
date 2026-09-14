@@ -33,7 +33,7 @@
                         <img src="/uploads/logo.png" alt="Logo">
                     @else
                         <span class="auth-shell__logo-mark"><i class="fas fa-layer-group"></i></span>
-                        {{ config('app.name', 'ultimatePOS') }}
+                        {{ config('app.name', 'POS') }}
                     @endif
                 </a>
                 @if(!empty(config('constants.app_title')))

@@ -7,9 +7,14 @@
   $custom_labels = json_decode(session('business.custom_labels'), true);
 @endphp
 <!-- Content Header (Page header) -->
-<section class="content-header">
-    <h1>@lang('purchase.edit_purchase') <i class="fa fa-keyboard-o hover-q text-muted" aria-hidden="true" data-container="body" data-toggle="popover" data-placement="bottom" data-content="@include('purchase.partials.keyboard_shortcuts_details')" data-html="true" data-trigger="hover" data-original-title="" title=""></i></h1>
-</section>
+<div class="page-toolbar no-print">
+    <div>
+        <h1 class="page-toolbar__title">@lang('purchase.edit_purchase') <i class="fa fa-keyboard-o hover-q text-muted" aria-hidden="true" data-container="body" data-toggle="popover" data-placement="bottom" data-content="@include('purchase.partials.keyboard_shortcuts_details')" data-html="true" data-trigger="hover" data-original-title="" title=""></i></h1>
+    </div>
+    <div class="page-toolbar__actions">
+        <a class="btn btn-default" href="{{action([\App\Http\Controllers\PurchaseController::class, 'index'])}}"><i class="fa fa-arrow-left"></i> @lang('purchase.purchases')</a>
+    </div>
+</div>
 
 <!-- Main content -->
 <section class="content">
@@ -30,7 +35,7 @@
 
   <input type="hidden" id="purchase_id" value="{{ $purchase->id }}">
 
-    @component('components.widget', ['class' => 'box-primary'])
+    @component('components.widget', ['class' => 'box-primary', 'title' => __('lang_v1.basic_information')])
         <div class="row">
             <div class="@if(!empty($default_purchase_status)) col-sm-4 @else col-sm-3 @endif">
               <div class="form-group">
@@ -221,7 +226,7 @@
         @endif
     @endcomponent
 
-    @component('components.widget', ['class' => 'box-primary'])
+    @component('components.widget', ['class' => 'box-primary', 'title' => __('lang_v1.purchase_items')])
         <div class="row">
             <div class="col-sm-2 text-center">
               <button type="button" class="btn btn-primary btn-flat" data-toggle="modal" data-target="#import_purchase_products_modal">@lang('product.import_products')</button>
@@ -279,7 +284,7 @@
         </div>
     @endcomponent
 
-    @component('components.widget', ['class' => 'box-primary'])
+    @component('components.widget', ['class' => 'box-primary', 'title' => __('lang_v1.discount_tax_and_notes')])
         <div class="row">
             <div class="col-sm-12">
                 <table class="table">
@@ -347,7 +352,7 @@
             </div>
         </div>
     @endcomponent
-    @component('components.widget', ['class' => 'box-primary'])
+    @component('components.widget', ['class' => 'box-primary', 'title' => __('purchase.shipping_details')])
     <div class="row">
       <div class="col-md-4">
         <div class="form-group">
@@ -519,10 +524,8 @@
     </div>
     @endcomponent
   
-    <div class="row">
-        <div class="col-sm-12 text-center">
-          <button type="button" id="submit_purchase_form" class="btn btn-primary btn-big btn-flat">@lang('messages.update')</button>
-        </div>
+    <div class="form-actions-bar">
+        <button type="button" id="submit_purchase_form" class="btn btn-primary btn-big btn-flat">@lang('messages.update')</button>
     </div>
 {!! Form::close() !!}
 </section>

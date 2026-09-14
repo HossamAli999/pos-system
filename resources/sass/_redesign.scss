@@ -1296,6 +1296,24 @@ body.lockscreen { background: var(--ink-50); }
 
 hr { border-top: 1px solid var(--ink-100); }
 
+// ---------- purchase/sell "view details" modal (invoice-style summary) ----------
+// Shared markup pattern (purchase/partials/show_details.blade.php and
+// similar sell partials): a 3-column .invoice-info header block, a line
+// items table, then a totals table whose last row is the grand total. Left
+// structurally untouched (it's cloned into the print window as-is) — only
+// non-print visual polish here.
+.invoice-info {
+    margin: 0 0 16px;
+    .invoice-col {
+        background: var(--ink-50);
+        border: 1px solid var(--ink-100);
+        border-radius: var(--radius);
+        padding: 14px 16px;
+        font-size: 13px;
+
+        address { margin-bottom: 8px; }
+    }
+}
 // ---------- guest invoice page (sale_pos/partials/show_invoice.blade.php) ----------
 .invoice-page {
     min-height: 100vh;

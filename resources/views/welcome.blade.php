@@ -1,5 +1,5 @@
 @extends('layouts.home')
-@section('title', config('app.name', 'ultimatePOS'))
+@section('title', config('app.name', 'POS'))
 
 @section('content')
 <section class="hero">
@@ -7,7 +7,7 @@
         <span class="hero__eyebrow"><i class="fas fa-bolt"></i> @lang('lang_v1.pos_module')</span>
         <h1 class="hero__title">
             @lang('lang_v1.run_your_shop_with')
-            <span class="grad">{{ config('app.name', 'ultimatePOS') }}</span>
+            <span class="grad">{{ config('app.name', 'POS') }}</span>
         </h1>
         <p class="hero__subtitle">
             @if(!empty(env('APP_TITLE')))
@@ -80,6 +80,6 @@
 @endif
 
 <footer class="landing-footer">
-    {{ config('app.name', 'ultimatePOS') }} &copy; {{ date('Y') }}
+    {{ config('app.name', 'POS') }} &copy; {{ date('Y') }}
 </footer>
 @endsection

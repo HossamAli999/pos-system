@@ -2,7 +2,7 @@
   <div class="landing-header__inner">
     <a class="landing-logo" href="/">
       <span class="landing-logo__mark"><i class="fas fa-layer-group"></i></span>
-      {{ config('app.name', 'ultimatePOS') }}
+      {{ config('app.name', 'POS') }}
     </a>
 
     <button type="button" class="landing-nav-toggle" data-toggle="collapse" data-target="#landing-nav" aria-expanded="false" aria-controls="landing-nav">

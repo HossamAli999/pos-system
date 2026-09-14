@@ -51,40 +51,6 @@
                     </div>
                   </div>
 
-                <h4> License Details <small class="text-danger">Make sure to provide correct information from Envato/codecanyon</small></h4>
-                <hr/>
-
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="envato_purchase_code">Envato Purchase Code:*</label>
-                        <input type="password" name="ENVATO_PURCHASE_CODE" required class="form-control" id="envato_purchase_code">
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="envato_username">Envato Username:*</label>
-                        <input type="text" name="ENVATO_USERNAME" required class="form-control" id="envato_username">
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="envato_email">Your Email:</label>
-                        <input type="email" name="ENVATO_EMAIL" class="form-control" id="envato_email" placeholder="optional">
-                        <p class="help-block">For Newsletter & support</p>
-                    </div>
-                </div>
-
-                  @if($activation_key)
-                    <div class="col-md-6">
-                      <div class="form-group">
-                          <label for="envato_purchase_code">Activation Licence Code:*</label>
-                          <input type="password" name="MAC_LICENCE_CODE" required class="form-control" id="activation_licence_code">
-                      </div>
-                    </div>
-                  @endif
-                  
-                  <div class="clearfix"></div>
-                  
                   <h4> Database Details <small>Make sure to provide correct information</small></h4>
                   <hr/>
 

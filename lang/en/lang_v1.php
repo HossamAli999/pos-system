@@ -1549,4 +1549,8 @@ return [
     'ready_to_get_started' => 'Ready to get started?',
     'ready_to_get_started_subtitle' => 'Create your free account and start selling in minutes.',
     'quick_actions' => 'Quick Actions',
+    'basic_information' => 'Basic Information',
+    'additional_information' => 'Additional Information',
+    'pricing_and_type' => 'Pricing & Type',
+    'no_menu_results_found' => 'No menu items found',
 ];

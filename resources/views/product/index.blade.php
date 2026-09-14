@@ -4,15 +4,20 @@
 @section('content')
 
 <!-- Content Header (Page header) -->
-<section class="content-header">
-    <h1>@lang('sale.products')
-        <small>@lang('lang_v1.manage_products')</small>
-    </h1>
-    <!-- <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-        <li class="active">Here</li>
-    </ol> -->
-</section>
+<div class="page-toolbar no-print">
+    <div>
+        <h1 class="page-toolbar__title">@lang('sale.products')</h1>
+        <p class="page-toolbar__subtitle">@lang('lang_v1.manage_products')</p>
+    </div>
+    <div class="page-toolbar__actions">
+        @if($is_admin)
+            <a class="btn btn-default" href="{{action([\App\Http\Controllers\ProductController::class, 'downloadExcel'])}}"><i class="fa fa-download"></i> @lang('lang_v1.download_excel')</a>
+        @endif
+        @can('product.create')
+            <a class="btn btn-primary" href="{{action([\App\Http\Controllers\ProductController::class, 'create'])}}"><i class="fa fa-plus"></i> @lang('messages.add')</a>
+        @endcan
+    </div>
+</div>
 
 <!-- Main content -->
 <section class="content">
@@ -112,14 +117,6 @@
 
                 <div class="tab-content">
                     <div class="tab-pane active" id="product_list_tab">
-                        @if($is_admin)
-                            <a class="btn btn-success pull-right margin-left-10" href="{{action([\App\Http\Controllers\ProductController::class, 'downloadExcel'])}}"><i class="fa fa-download"></i> @lang('lang_v1.download_excel')</a>
-                        @endif
-                        @can('product.create')                            
-                            <a class="btn btn-primary pull-right" href="{{action([\App\Http\Controllers\ProductController::class, 'create'])}}">
-                                        <i class="fa fa-plus"></i> @lang('messages.add')</a>
-                            <br><br>
-                        @endcan
                         @include('product.partials.product_list')
                     </div>
                     @can('stock_report.view')

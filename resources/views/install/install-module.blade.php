@@ -39,10 +39,6 @@
                         <div class="form-group">
                             <label for="license_code">License Code:*</label>
                             <input type="text" name="license_code" required class="form-control" id="license_code">
-
-                            @if(!empty($intruction_type) && $intruction_type == 'uf')
-                                <p class="help-block"><a href="https://ultimatefosters.com/docs/ultimate-fosters-shop/license-key/" target="_blank">Where is my License Key?</a></p>
-                            @endif
                         </div>
                     </div>
 
@@ -50,10 +46,6 @@
                         <div class="form-group">
                             <label for="login_username">Login Username:*</label>
                             <input type="text" name="login_username" required class="form-control" id="login_username">
-
-                            @if(!empty($intruction_type) && $intruction_type == 'uf')
-                                <p class="help-block"><a href="https://ultimatefosters.com/docs/ultimate-fosters-shop/user-name/" target="_blank" class="text-success">Where is my Username?</a></p>
-                            @endif
                         </div>
                     </div>
 
@@ -64,8 +56,6 @@
                           <p class="help-block">For Newsletter & support</p>
                         </div>
                     </div>
-                    {{-- @include('install.partials.e_license') --}}
-
                     <div class="col-md-12">
                         <button type="submit" id="install_button" class="btn btn-primary pull-right">I Agree, Install</button>
                     </div>

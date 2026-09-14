@@ -4,10 +4,17 @@
 @section('content')
 
 <!-- Content Header (Page header) -->
-<section class="content-header no-print">
-    <h1>@lang( 'sale.sells')
-    </h1>
-</section>
+<div class="page-toolbar no-print">
+    <div>
+        <h1 class="page-toolbar__title">@lang( 'sale.sells')</h1>
+    </div>
+    @can('direct_sell.access')
+        <div class="page-toolbar__actions">
+            <a class="btn btn-primary" href="{{action([\App\Http\Controllers\SellController::class, 'create'])}}">
+            <i class="fa fa-plus"></i> @lang('messages.add')</a>
+        </div>
+    @endcan
+</div>
 
 <!-- Main content -->
 <section class="content no-print">
@@ -23,15 +30,7 @@
             </div>
         @endif
     @endcomponent
-    @component('components.widget', ['class' => 'box-primary', 'title' => __( 'lang_v1.all_sales')])
-        @can('direct_sell.access')
-            @slot('tool')
-                <div class="box-tools">
-                    <a class="btn btn-block btn-primary" href="{{action([\App\Http\Controllers\SellController::class, 'create'])}}">
-                    <i class="fa fa-plus"></i> @lang('messages.add')</a>
-                </div>
-            @endslot
-        @endcan
+    @component('components.widget', ['class' => 'box-primary'])
         @if(auth()->user()->can('direct_sell.view') ||  auth()->user()->can('view_own_sell_only') ||  auth()->user()->can('view_commission_agent_sell'))
         @php
             $custom_labels = json_decode(session('business.custom_labels'), true);

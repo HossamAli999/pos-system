@@ -8,13 +8,14 @@
 @endphp
 
 <!-- Content Header (Page header) -->
-<section class="content-header">
-    <h1>@lang('product.edit_product')</h1>
-    <!-- <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-        <li class="active">Here</li>
-    </ol> -->
-</section>
+<div class="page-toolbar no-print">
+    <div>
+        <h1 class="page-toolbar__title">@lang('product.edit_product')</h1>
+    </div>
+    <div class="page-toolbar__actions">
+        <a class="btn btn-default" href="{{action([\App\Http\Controllers\ProductController::class, 'index'])}}"><i class="fa fa-arrow-left"></i> @lang('sale.products')</a>
+    </div>
+</div>
 
 <!-- Main content -->
 <section class="content">
@@ -22,7 +23,7 @@
         'class' => 'product_form', 'files' => true ]) !!}
     <input type="hidden" id="product_id" value="{{ $product->id }}">
 
-    @component('components.widget', ['class' => 'box-primary'])
+    @component('components.widget', ['class' => 'box-primary', 'title' => __('lang_v1.basic_information')])
         <div class="row">
             <div class="col-sm-4">
               <div class="form-group">
@@ -179,7 +180,7 @@
             </div>
     @endcomponent
 
-    @component('components.widget', ['class' => 'box-primary'])
+    @component('components.widget', ['class' => 'box-primary', 'title' => __('lang_v1.additional_information')])
         <div class="row">
         @if(session('business.enable_product_expiry'))
 
@@ -322,7 +323,7 @@
         </div>
     @endcomponent
 
-    @component('components.widget', ['class' => 'box-primary'])
+    @component('components.widget', ['class' => 'box-primary', 'title' => __('lang_v1.pricing_and_type')])
         <div class="row">
             <div class="col-sm-4 @if(!session('business.enable_price_tax')) hide @endif">
               <div class="form-group">
@@ -357,8 +358,7 @@
   <div class="row">
     <input type="hidden" name="submit_type" id="submit_type">
         <div class="col-sm-12">
-          <div class="text-center">
-            <div class="btn-group">
+          <div class="form-actions-bar">
               @if($selling_price_group_count)
                 <button type="submit" value="submit_n_add_selling_prices" class="btn btn-warning btn-big submit_product_form">@lang('lang_v1.save_n_add_selling_price_group_prices')</button>
               @endif
@@ -370,7 +370,6 @@
               <button type="submit" value="save_n_add_another" class="btn bg-maroon submit_product_form btn-big">@lang('lang_v1.update_n_add_another')</button>
 
               <button type="submit" value="submit" class="btn btn-primary submit_product_form btn-big">@lang('messages.update')</button>
-            </div>
           </div>
         </div>
   </div>

@@ -4,13 +4,14 @@
 @section('content')
 
 <!-- Content Header (Page header) -->
-<section class="content-header">
-    <h1>@lang('product.add_new_product')</h1>
-    <!-- <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-        <li class="active">Here</li>
-    </ol> -->
-</section>
+<div class="page-toolbar no-print">
+    <div>
+        <h1 class="page-toolbar__title">@lang('product.add_new_product')</h1>
+    </div>
+    <div class="page-toolbar__actions">
+        <a class="btn btn-default" href="{{action([\App\Http\Controllers\ProductController::class, 'index'])}}"><i class="fa fa-arrow-left"></i> @lang('sale.products')</a>
+    </div>
+</div>
 
 <!-- Main content -->
 <section class="content">
@@ -20,7 +21,7 @@
     @endphp
     {!! Form::open(['url' => action([\App\Http\Controllers\ProductController::class, 'store']), 'method' => 'post',
     'id' => 'product_add_form','class' => 'product_form ' . $form_class, 'files' => true ]) !!}
-    @component('components.widget', ['class' => 'box-primary'])
+    @component('components.widget', ['class' => 'box-primary', 'title' => __('lang_v1.basic_information')])
     <div class="row">
         <div class="col-sm-4">
             <div class="form-group">
@@ -177,7 +178,7 @@
     </div>
     @endcomponent
 
-    @component('components.widget', ['class' => 'box-primary'])
+    @component('components.widget', ['class' => 'box-primary', 'title' => __('lang_v1.additional_information')])
     <div class="row">
         @if(session('business.enable_product_expiry'))
 
@@ -304,7 +305,7 @@
     </div>
     @endcomponent
 
-    @component('components.widget', ['class' => 'box-primary'])
+    @component('components.widget', ['class' => 'box-primary', 'title' => __('lang_v1.pricing_and_type')])
     <div class="row">
 
         <div class="col-sm-4 @if(!session('business.enable_price_tax')) hide @endif">
@@ -344,21 +345,18 @@
     <div class="row">
         <div class="col-sm-12">
             <input type="hidden" name="submit_type" id="submit_type">
-            <div class="text-center">
-                <div class="btn-group">
-                    @if($selling_price_group_count)
-                    <button type="submit" value="submit_n_add_selling_prices" class="btn btn-warning btn-big submit_product_form">@lang('lang_v1.save_n_add_selling_price_group_prices')</button>
-                    @endif
+            <div class="form-actions-bar">
+                @if($selling_price_group_count)
+                <button type="submit" value="submit_n_add_selling_prices" class="btn btn-warning btn-big submit_product_form">@lang('lang_v1.save_n_add_selling_price_group_prices')</button>
+                @endif
 
-                    @can('product.opening_stock')
-                    <button id="opening_stock_button" @if(!empty($duplicate_product) && $duplicate_product->enable_stock == 0) disabled @endif type="submit" value="submit_n_add_opening_stock" class="btn bg-purple btn-big submit_product_form">@lang('lang_v1.save_n_add_opening_stock')</button>
-                    @endcan
+                @can('product.opening_stock')
+                <button id="opening_stock_button" @if(!empty($duplicate_product) && $duplicate_product->enable_stock == 0) disabled @endif type="submit" value="submit_n_add_opening_stock" class="btn bg-purple btn-big submit_product_form">@lang('lang_v1.save_n_add_opening_stock')</button>
+                @endcan
 
-                    <button type="submit" value="save_n_add_another" class="btn bg-maroon btn-big submit_product_form">@lang('lang_v1.save_n_add_another')</button>
+                <button type="submit" value="save_n_add_another" class="btn bg-maroon btn-big submit_product_form">@lang('lang_v1.save_n_add_another')</button>
 
-                    <button type="submit" value="submit" class="btn btn-primary btn-big submit_product_form">@lang('messages.save')</button>
-                </div>
-
+                <button type="submit" value="submit" class="btn btn-primary btn-big submit_product_form">@lang('messages.save')</button>
             </div>
         </div>
     </div>

@@ -204,6 +204,51 @@ $(document).ready(function () {
             columns: ':visible',
         },
         footer: true,
+        orientation: 'landscape',
+        pageSize: 'A4',
+        // DataTables' pdf button renders through pdfmake with a plain black-
+        // on-white default (no color, hairline borders) — this is the one
+        // place this is configured, shared by every list page's Export to
+        // PDF button, so restyling it here fixes it app-wide in one place.
+        customize: function (doc) {
+            doc.defaultStyle.fontSize = 9;
+            doc.defaultStyle.color = '#33362f';
+
+            if (doc.styles.title) {
+                doc.styles.title.fontSize = 14;
+                doc.styles.title.color = '#1f2320';
+                doc.styles.title.margin = [0, 0, 0, 10];
+            }
+
+            if (doc.styles.tableHeader) {
+                doc.styles.tableHeader.fillColor = '#0f6e56';
+                doc.styles.tableHeader.color = '#ffffff';
+                doc.styles.tableHeader.fontSize = 9;
+                doc.styles.tableHeader.alignment = 'left';
+            }
+
+            doc.pageMargins = [24, 32, 24, 32];
+
+            // Every DataTables-generated table in doc.content gets the same
+            // token-based border/row treatment (hairline warm-stone borders
+            // instead of pdfmake's default thin black grid, plus a subtle
+            // zebra stripe for readability on wide exports).
+            doc.content.forEach(function (block) {
+                if (block && block.table) {
+                    block.layout = {
+                        hLineWidth: function () { return 0.5; },
+                        vLineWidth: function () { return 0.5; },
+                        hLineColor: function () { return '#e4e1d9'; },
+                        vLineColor: function () { return '#e4e1d9'; },
+                        paddingTop: function () { return 4; },
+                        paddingBottom: function () { return 4; },
+                        fillColor: function (rowIndex) {
+                            return rowIndex > 0 && rowIndex % 2 === 0 ? '#f7f5f1' : null;
+                        },
+                    };
+                }
+            });
+        },
     };
 
     if (non_utf8_languages.indexOf(app_locale) == -1) {

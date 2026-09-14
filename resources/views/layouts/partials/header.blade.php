@@ -9,21 +9,23 @@
         <span class="sr-only">Toggle navigation</span>
       </a>
 
-      <span class="header-online-indicator" title="@lang('lang_v1.connection_status')">
-        <i class="fa fa-circle text-success" id="online_indicator"></i>
-      </span>
-
-      @if(Module::has('Superadmin'))
-        @includeIf('superadmin::layouts.partials.active_subscription')
-      @endif
-
-        @if(!empty(session('previous_user_id')) && !empty(session('previous_username')))
-            <a href="{{route('sign-in-as-user', session('previous_user_id'))}}" class="btn btn-flat btn-danger m-8 btn-sm mt-10"><i class="fas fa-undo"></i> @lang('lang_v1.back_to_username', ['username' => session('previous_username')] )</a>
-        @endif
-
       <!-- Navbar Right Menu -->
       <div class="navbar-custom-menu">
         <div class="header-toolbar">
+
+            <a href="{{route('home')}}" class="header-brand">
+                <span class="header-brand__mark"><i class="fas fa-layer-group"></i></span>
+                <span class="header-brand__name">{{ Session::get('business.name') }}</span>
+                <i class="fa fa-circle text-success header-online-indicator" id="online_indicator" title="@lang('lang_v1.connection_status')"></i>
+            </a>
+
+            @if(Module::has('Superadmin'))
+              @includeIf('superadmin::layouts.partials.active_subscription')
+            @endif
+
+            @if(!empty(session('previous_user_id')) && !empty(session('previous_username')))
+                <a href="{{route('sign-in-as-user', session('previous_user_id'))}}" class="btn btn-flat btn-danger btn-sm"><i class="fas fa-undo"></i> @lang('lang_v1.back_to_username', ['username' => session('previous_username')] )</a>
+            @endif
 
             @if(Module::has('Essentials'))
               @includeIf('essentials::layouts.partials.header_part')

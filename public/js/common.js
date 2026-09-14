@@ -368,10 +368,7 @@ $(document).on('click', 'input', function (event) {
     $(this).select();
 });
 
-$(document).on('click', '.toggle-font-size', function (event) {
-    localStorage.setItem('upos_font_size', $(this).data('size'));
-    update_font_size();
-});
+
 $(document).on('click', '.sidebar-toggle', function () {
     var sidebar_collapse = localStorage.getItem('upos_sidebar_collapse');
     if ($('body').hasClass('sidebar-collapse')) {

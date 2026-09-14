@@ -4,11 +4,6 @@
   <!-- sidebar: style can be found in sidebar.less -->
   <section class="sidebar">
 
-	<a href="{{route('home')}}" class="logo">
-		<span class="logo-mini"><i class="fas fa-layer-group"></i></span>
-		<span class="logo-lg">{{ Session::get('business.name') }}</span>
-	</a>
-
     <div class="sidebar-search">
         <i class="fas fa-search"></i>
         <input type="text" id="sidebar_menu_search" placeholder="@lang('lang_v1.search')" autocomplete="off">

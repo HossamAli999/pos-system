@@ -4,15 +4,17 @@
 @section('content')
 
 <!-- Content Header (Page header) -->
-<section class="content-header no-print">
-    <h1>@lang('purchase.purchases')
-        <small></small>
-    </h1>
-    <!-- <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-        <li class="active">Here</li>
-    </ol> -->
-</section>
+<div class="page-toolbar no-print">
+    <div>
+        <h1 class="page-toolbar__title">@lang('purchase.purchases')</h1>
+    </div>
+    @can('purchase.create')
+        <div class="page-toolbar__actions">
+            <a class="btn btn-primary" href="{{action([\App\Http\Controllers\PurchaseController::class, 'create'])}}">
+            <i class="fa fa-plus"></i> @lang('messages.add')</a>
+        </div>
+    @endcan
+</div>
 
 <!-- Main content -->
 <section class="content no-print">
@@ -49,15 +51,7 @@
         </div>
     @endcomponent
 
-    @component('components.widget', ['class' => 'box-primary', 'title' => __('purchase.all_purchases')])
-        @can('purchase.create')
-            @slot('tool')
-                <div class="box-tools">
-                    <a class="btn btn-block btn-primary" href="{{action([\App\Http\Controllers\PurchaseController::class, 'create'])}}">
-                    <i class="fa fa-plus"></i> @lang('messages.add')</a>
-                </div>
-            @endslot
-        @endcan
+    @component('components.widget', ['class' => 'box-primary'])
         @include('purchase.partials.purchase_table')
     @endcomponent
 

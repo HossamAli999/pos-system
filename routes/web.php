@@ -32,7 +32,6 @@ use App\Http\Controllers\LedgerDiscountController;
 use App\Http\Controllers\LocationSettingsController;
 use App\Http\Controllers\ManageUserController;
 use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\NotificationTemplateController;
 use App\Http\Controllers\OpeningStockController;
 use App\Http\Controllers\PrinterController;
 use App\Http\Controllers\ProductController;
@@ -380,7 +379,6 @@ Route::middleware(['setData', 'auth', 'SetSessionData', 'language', 'timezone', 
 
     Route::resource('selling-price-group', SellingPriceGroupController::class);
 
-    Route::resource('notification-templates', NotificationTemplateController::class)->only(['index', 'store']);
     Route::get('notification/get-template/{transaction_id}/{template_for}', [NotificationController::class, 'getTemplate']);
     Route::post('notification/send', [NotificationController::class, 'send']);
 

@@ -388,6 +388,40 @@ class AdminSidebarMenu
                 )->order(35);
             }
 
+            //Van Sales dropdown
+            if (auth()->user()->can('van_sales.access') || auth()->user()->can('van_sales.manage') || auth()->user()->can('van_sales.approve')) {
+                $menu->dropdown(
+                    __('van_sales.van_sales'),
+                    function ($sub) {
+                        $sub->url(
+                            action([\App\Http\Controllers\VanSalesTripController::class, 'index']),
+                            __('van_sales.all_trips'),
+                            ['icon' => 'fa fas fa-list', 'active' => request()->segment(1) == 'van-sales-trips' && request()->segment(2) == null]
+                        );
+                        $sub->url(
+                            action([\App\Http\Controllers\VanSalesTripController::class, 'create']),
+                            __('van_sales.start_trip'),
+                            ['icon' => 'fa fas fa-plus-circle', 'active' => request()->segment(1) == 'van-sales-trips' && request()->segment(2) == 'create']
+                        );
+                        if (auth()->user()->can('van_sales.manage')) {
+                            $sub->url(
+                                action([\App\Http\Controllers\VanSalesVehicleController::class, 'index']),
+                                __('van_sales.vehicles'),
+                                ['icon' => 'fa fas fa-truck', 'active' => request()->segment(1) == 'van-sales-vehicles']
+                            );
+                        }
+                        if (auth()->user()->can('van_sales.approve')) {
+                            $sub->url(
+                                action([\App\Http\Controllers\VanSalesTripController::class, 'index'], ['status' => 'pending_approval']),
+                                __('van_sales.pending_approvals'),
+                                ['icon' => 'fa fas fa-hourglass-half']
+                            );
+                        }
+                    },
+                    ['icon' => 'fa fas fa-shipping-fast']
+                )->order(37);
+            }
+
             //stock adjustment dropdown
             if (in_array('stock_adjustment', $enabled_modules) && (auth()->user()->can('purchase.view') || auth()->user()->can('purchase.create'))) {
                 $menu->dropdown(

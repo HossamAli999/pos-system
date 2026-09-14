@@ -1548,6 +1548,70 @@ return [
     'feature_locations_desc' => 'Manage as many stores, warehouses and users as you need.',
     'ready_to_get_started' => 'Ready to get started?',
     'ready_to_get_started_subtitle' => 'Create your free account and start selling in minutes.',
+
+    // Landing page — stats strip
+    'stats_locations' => 'Unlimited locations',
+    'stats_locations_desc' => 'One account, every branch',
+    'stats_reports' => '40+ reports',
+    'stats_reports_desc' => 'Sales, stock, tax and profit, built in',
+    'stats_languages' => 'Multi-language',
+    'stats_languages_desc' => 'Including full Arabic RTL support',
+    'stats_roles' => 'Role-based access',
+    'stats_roles_desc' => 'Control what each team member can do',
+
+    // Landing page — extra feature cards
+    'feature_purchasing_title' => 'Purchasing & Suppliers',
+    'feature_purchasing_desc' => 'Manage purchase orders, supplier payments and returns in one place.',
+    'feature_expenses_title' => 'Expenses & Accounts',
+    'feature_expenses_desc' => 'Track expenses, payments and your full account ledger.',
+    'feature_roles_title' => 'Roles & Permissions',
+    'feature_roles_desc' => 'Give every team member exactly the access they need, nothing more.',
+    'feature_restaurant_title' => 'Restaurant Mode',
+    'feature_restaurant_desc' => 'Table management, kitchen display and order tracking for food businesses.',
+    'feature_barcode_title' => 'Barcodes & Labels',
+    'feature_barcode_desc' => 'Generate and print barcode labels for every product you sell.',
+    'feature_multilang_title' => 'Multi-language',
+    'feature_multilang_desc' => 'Run your business in your own language, with full right-to-left support.',
+
+    // Landing page — how it works
+    'how_it_works_title' => 'Up and running in three steps',
+    'how_it_works_subtitle' => 'No lengthy setup, no training required.',
+    'how_it_works_step1_title' => 'Set up your business',
+    'how_it_works_step1_desc' => 'Add your business details, locations and currency in a few minutes.',
+    'how_it_works_step2_title' => 'Add your products',
+    'how_it_works_step2_desc' => 'Add products one by one, or import your whole catalog from a spreadsheet.',
+    'how_it_works_step3_title' => 'Start selling',
+    'how_it_works_step3_desc' => 'Open the register and start ringing up sales, tracked automatically.',
+
+    // Landing page — built for
+    'built_for_title' => 'Built for businesses like yours',
+    'built_for_subtitle' => 'Whatever you sell, however you sell it.',
+    'built_for_retail' => 'Retail stores',
+    'built_for_restaurant' => 'Restaurants & cafés',
+    'built_for_pharmacy' => 'Pharmacies',
+    'built_for_electronics' => 'Electronics shops',
+    'built_for_multi_branch' => 'Multi-branch chains',
+    'built_for_wholesale' => 'Wholesale & distribution',
+
+    // Landing page — FAQ
+    'faq_title' => 'Frequently asked questions',
+    'faq_subtitle' => 'Everything you need to know before you get started.',
+    'faq_q1' => 'Can I manage more than one location?',
+    'faq_a1' => 'Yes. Add as many business locations as you need and manage stock, sales and staff for each one from a single account.',
+    'faq_q2' => 'Can I control what my staff can see and do?',
+    'faq_a2' => 'Yes. Create custom roles with exactly the permissions each team member needs, from cashiers to managers.',
+    'faq_q3' => 'Can I import my existing products?',
+    'faq_a3' => 'Yes. Import your product catalog and opening stock from a spreadsheet instead of entering everything by hand.',
+    'faq_q4' => 'Does it support languages other than English?',
+    'faq_a4' => 'Yes, including full right-to-left support for Arabic.',
+    'faq_q5' => 'Do I need to install anything?',
+    'faq_a5' => 'No. It runs entirely in your browser, no downloads or installation required.',
+
+    // Landing page — footer
+    'footer_product' => 'Product',
+    'footer_account' => 'Account',
+    'footer_rights' => 'All rights reserved.',
+
     'quick_actions' => 'Quick Actions',
     'basic_information' => 'Basic Information',
     'additional_information' => 'Additional Information',

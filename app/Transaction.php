@@ -30,6 +30,34 @@ class Transaction extends Model
     ];
 
     /**
+     * Auto-tag a sale with the currently-active van sales trip for its
+     * location, if any — kept as a model event here (rather than editing
+     * TransactionUtil::createSellTransaction()/SellPosController, which
+     * every sale in the app goes through) so this stays fully additive and
+     * can't regress the core sell-creation path. Only 'sell' transactions
+     * at a location that's actually a van sales vehicle with an open trip
+     * get tagged; everything else is untouched.
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($transaction) {
+            if ($transaction->type === 'sell' && empty($transaction->van_sales_trip_id) && ! empty($transaction->location_id)) {
+                $trip = \App\VanSalesTrip::where('status', 'out')
+                    ->whereHas('vehicle', function ($q) use ($transaction) {
+                        $q->where('location_id', $transaction->location_id);
+                    })
+                    ->first();
+
+                if ($trip) {
+                    $transaction->van_sales_trip_id = $trip->id;
+                }
+            }
+        });
+    }
+
+    /**
      * The table associated with the model.
      *
      * @var string
@@ -54,6 +82,11 @@ class Transaction extends Model
     public function delivery_person_user()
     {
         return $this->belongsTo(\App\User::class, 'delivery_person');
+    }
+
+    public function van_sales_trip()
+    {
+        return $this->belongsTo(\App\VanSalesTrip::class, 'van_sales_trip_id');
     }
 
     public function payment_lines()

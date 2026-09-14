@@ -38,7 +38,40 @@
     </div>
 </section>
 
-<section class="features">
+<section class="stats-strip">
+    <div class="stats-strip__inner">
+        <div class="stat-item">
+            <span class="stat-item__icon"><i class="fas fa-store"></i></span>
+            <div>
+                <h4>@lang('lang_v1.stats_locations')</h4>
+                <p>@lang('lang_v1.stats_locations_desc')</p>
+            </div>
+        </div>
+        <div class="stat-item">
+            <span class="stat-item__icon"><i class="fas fa-chart-bar"></i></span>
+            <div>
+                <h4>@lang('lang_v1.stats_reports')</h4>
+                <p>@lang('lang_v1.stats_reports_desc')</p>
+            </div>
+        </div>
+        <div class="stat-item">
+            <span class="stat-item__icon"><i class="fas fa-language"></i></span>
+            <div>
+                <h4>@lang('lang_v1.stats_languages')</h4>
+                <p>@lang('lang_v1.stats_languages_desc')</p>
+            </div>
+        </div>
+        <div class="stat-item">
+            <span class="stat-item__icon"><i class="fas fa-user-shield"></i></span>
+            <div>
+                <h4>@lang('lang_v1.stats_roles')</h4>
+                <p>@lang('lang_v1.stats_roles_desc')</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="features" id="features">
     <div class="features__inner">
         <div class="features__head">
             <h2>@lang('lang_v1.everything_you_need')</h2>
@@ -65,6 +98,101 @@
                 <h3>@lang('lang_v1.feature_locations_title')</h3>
                 <p>@lang('lang_v1.feature_locations_desc')</p>
             </div>
+            <div class="feature-card">
+                <span class="feature-card__icon"><i class="fas fa-truck-loading"></i></span>
+                <h3>@lang('lang_v1.feature_purchasing_title')</h3>
+                <p>@lang('lang_v1.feature_purchasing_desc')</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-card__icon"><i class="fas fa-file-invoice-dollar"></i></span>
+                <h3>@lang('lang_v1.feature_expenses_title')</h3>
+                <p>@lang('lang_v1.feature_expenses_desc')</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-card__icon"><i class="fas fa-user-shield"></i></span>
+                <h3>@lang('lang_v1.feature_roles_title')</h3>
+                <p>@lang('lang_v1.feature_roles_desc')</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-card__icon"><i class="fas fa-utensils"></i></span>
+                <h3>@lang('lang_v1.feature_restaurant_title')</h3>
+                <p>@lang('lang_v1.feature_restaurant_desc')</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-card__icon"><i class="fas fa-barcode"></i></span>
+                <h3>@lang('lang_v1.feature_barcode_title')</h3>
+                <p>@lang('lang_v1.feature_barcode_desc')</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-card__icon"><i class="fas fa-language"></i></span>
+                <h3>@lang('lang_v1.feature_multilang_title')</h3>
+                <p>@lang('lang_v1.feature_multilang_desc')</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="how-it-works" id="how-it-works">
+    <div class="how-it-works__inner">
+        <div class="features__head">
+            <h2>@lang('lang_v1.how_it_works_title')</h2>
+            <p>@lang('lang_v1.how_it_works_subtitle')</p>
+        </div>
+        <div class="how-it-works__steps">
+            <div class="step-card">
+                <span class="step-card__num">1</span>
+                <h3>@lang('lang_v1.how_it_works_step1_title')</h3>
+                <p>@lang('lang_v1.how_it_works_step1_desc')</p>
+            </div>
+            <div class="step-card">
+                <span class="step-card__num">2</span>
+                <h3>@lang('lang_v1.how_it_works_step2_title')</h3>
+                <p>@lang('lang_v1.how_it_works_step2_desc')</p>
+            </div>
+            <div class="step-card">
+                <span class="step-card__num">3</span>
+                <h3>@lang('lang_v1.how_it_works_step3_title')</h3>
+                <p>@lang('lang_v1.how_it_works_step3_desc')</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="built-for">
+    <div class="built-for__inner">
+        <div class="features__head">
+            <h2>@lang('lang_v1.built_for_title')</h2>
+            <p>@lang('lang_v1.built_for_subtitle')</p>
+        </div>
+        <div class="built-for__tags">
+            <span class="built-for__tag"><i class="fas fa-store"></i> @lang('lang_v1.built_for_retail')</span>
+            <span class="built-for__tag"><i class="fas fa-utensils"></i> @lang('lang_v1.built_for_restaurant')</span>
+            <span class="built-for__tag"><i class="fas fa-pills"></i> @lang('lang_v1.built_for_pharmacy')</span>
+            <span class="built-for__tag"><i class="fas fa-mobile-alt"></i> @lang('lang_v1.built_for_electronics')</span>
+            <span class="built-for__tag"><i class="fas fa-network-wired"></i> @lang('lang_v1.built_for_multi_branch')</span>
+            <span class="built-for__tag"><i class="fas fa-warehouse"></i> @lang('lang_v1.built_for_wholesale')</span>
+        </div>
+    </div>
+</section>
+
+<section class="faq" id="faq">
+    <div class="faq__inner">
+        <div class="features__head">
+            <h2>@lang('lang_v1.faq_title')</h2>
+            <p>@lang('lang_v1.faq_subtitle')</p>
+        </div>
+        <div class="faq__list" id="faq-accordion">
+            @foreach(range(1, 5) as $i)
+            <div class="faq-item">
+                <a href="#faq-a{{ $i }}" class="faq-item__question" data-toggle="collapse" data-parent="#faq-accordion">
+                    @lang('lang_v1.faq_q' . $i)
+                    <i class="fas fa-chevron-down faq-item__caret"></i>
+                </a>
+                <div id="faq-a{{ $i }}" class="collapse faq-item__answer">
+                    <p>@lang('lang_v1.faq_a' . $i)</p>
+                </div>
+            </div>
+            @endforeach
         </div>
     </div>
 </section>
@@ -79,7 +207,30 @@
 </section>
 @endif
 
-<footer class="landing-footer">
-    {{ config('app.name', 'POS') }} &copy; {{ date('Y') }}
+<footer class="landing-footer landing-footer--rich">
+    <div class="landing-footer__inner">
+        <div class="landing-footer__brand">
+            <span class="header-brand__mark"><i class="fas fa-layer-group"></i></span>
+            <strong>{{ config('app.name', 'POS') }}</strong>
+        </div>
+        <div class="landing-footer__col">
+            <h5>@lang('lang_v1.footer_product')</h5>
+            <a href="#features">@lang('lang_v1.everything_you_need')</a>
+            <a href="#how-it-works">@lang('lang_v1.how_it_works_title')</a>
+            <a href="#faq">@lang('lang_v1.faq_title')</a>
+        </div>
+        <div class="landing-footer__col">
+            <h5>@lang('lang_v1.footer_account')</h5>
+            @if(Route::has('login'))
+                <a href="{{ route('login') }}">@lang('lang_v1.login')</a>
+                @if(config('constants.allow_registration'))
+                    <a href="{{ route('business.getRegister') }}">@lang('lang_v1.get_started')</a>
+                @endif
+            @endif
+        </div>
+    </div>
+    <div class="landing-footer__bottom">
+        {{ config('app.name', 'POS') }} &copy; {{ date('Y') }} — @lang('lang_v1.footer_rights')
+    </div>
 </footer>
 @endsection

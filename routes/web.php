@@ -50,6 +50,8 @@ use App\Http\Controllers\SellPosController;
 use App\Http\Controllers\SellReturnController;
 use App\Http\Controllers\StockAdjustmentController;
 use App\Http\Controllers\StockTransferController;
+use App\Http\Controllers\VanSalesTripController;
+use App\Http\Controllers\VanSalesVehicleController;
 use App\Http\Controllers\TaxonomyController;
 use App\Http\Controllers\TaxRateController;
 use App\Http\Controllers\TransactionPaymentController;
@@ -349,6 +351,13 @@ Route::middleware(['setData', 'auth', 'SetSessionData', 'language', 'timezone', 
     Route::get('stock-transfers/print/{id}', [StockTransferController::class, 'printInvoice']);
     Route::post('stock-transfers/update-status/{id}', [StockTransferController::class, 'updateStatus']);
     Route::resource('stock-transfers', StockTransferController::class);
+
+    //Van Sales
+    Route::resource('van-sales-vehicles', VanSalesVehicleController::class)->only(['index', 'create', 'store', 'edit', 'update']);
+    Route::post('van-sales-trips/{id}/submit-for-approval', [VanSalesTripController::class, 'submitForApproval']);
+    Route::post('van-sales-trips/{id}/approve', [VanSalesTripController::class, 'approve']);
+    Route::post('van-sales-trips/{id}/reject', [VanSalesTripController::class, 'reject']);
+    Route::resource('van-sales-trips', VanSalesTripController::class)->only(['index', 'create', 'store', 'show']);
 
     Route::get('/opening-stock/add/{product_id}', [OpeningStockController::class, 'add']);
     Route::post('/opening-stock/save', [OpeningStockController::class, 'save']);

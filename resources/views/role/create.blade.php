@@ -1594,6 +1594,38 @@
           </div>
         @endif
         
+        <div class="row check_group">
+          <div class="col-md-3">
+            <h4>@lang('van_sales.van_sales')</h4>
+          </div>
+          <div class="col-md-9">
+            <div class="col-md-12">
+              <div class="checkbox">
+                <label>
+                  {!! Form::checkbox('permissions[]', 'van_sales.access', false,
+                  [ 'class' => 'input-icheck']); !!} {{ __('van_sales.permission_access') }}
+                </label>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="checkbox">
+                <label>
+                  {!! Form::checkbox('permissions[]', 'van_sales.manage', false,
+                  [ 'class' => 'input-icheck']); !!} {{ __('van_sales.permission_manage') }}
+                </label>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="checkbox">
+                <label>
+                  {!! Form::checkbox('permissions[]', 'van_sales.approve', false,
+                  [ 'class' => 'input-icheck']); !!} {{ __('van_sales.permission_approve') }}
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
         @include('role.partials.module_permissions')
         <div class="row">
         <div class="col-md-12 text-center">

@@ -904,6 +904,20 @@ div.dataTables_wrapper div.dataTables_length select {
     border-radius: 50%;
 }
 
+// Product list thumbnail (ProductController::index()'s DataTables 'image'
+// column) — like .scrolltop, this class has never had any CSS anywhere in
+// the codebase, so the <img> rendered at its native uploaded resolution
+// (often 500px+) with no constraint at all, blowing out the table row
+// height/width. Constrain it to a small square thumbnail.
+.product-thumbnail-small {
+    width: 36px;
+    height: 36px;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--ink-200);
+    flex-shrink: 0;
+}
+
 // ---------- loading states ----------
 // Ladda is "themeless" on purpose (see app.scss) — its spinner reads the
 // button's own computed text color, so it already matches our .btn styles

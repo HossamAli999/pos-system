@@ -1688,6 +1688,39 @@ body.lockscreen { background: var(--ink-50); }
 
 hr { border-top: 1px solid var(--ink-100); }
 
+// ---------- scroll-to-top button (layouts/app.blade.php's .scrolltop) ----------
+// This has never actually had a base style anywhere in the codebase — not in
+// vendor.css, not in the theme's custom.css. The only rule that exists at all
+// is a partial RTL-only override (AdminLTE.rtl.min.css, third-party RTL
+// conversion) that sets `left` positioning assuming a base rule that was
+// never written, so the button has been unstyled/effectively invisible in
+// both LTR and RTL. app.js already handles show/hide-on-scroll (fadeIn/
+// fadeOut) and the click-to-scroll behavior — only visual styling is missing.
+.scrolltop {
+    display: none; // shown via fadeIn() in app.js once the page is scrolled
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 1040;
+}
+.scroll.icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--brand-600);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    box-shadow: var(--shadow-lg);
+    cursor: pointer;
+    transition: background .15s ease, transform .15s ease;
+}
+.scroll.icon:hover { background: var(--brand-700); transform: translateY(-2px); }
+html[dir="rtl"] .scrolltop { right: auto; left: 24px; }
+@media print { .scrolltop { display: none !important; } }
+
 // ---------- purchase/sell "view details" modal (invoice-style summary) ----------
 // Shared markup pattern (purchase/partials/show_details.blade.php and
 // similar sell partials): a 3-column .invoice-info header block, a line

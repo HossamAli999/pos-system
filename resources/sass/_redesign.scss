@@ -918,6 +918,55 @@ div.dataTables_wrapper div.dataTables_length select {
     flex-shrink: 0;
 }
 
+// Same phantom-class bug as .product-thumbnail-small above, found on a
+// second pass: bare `.img` (distinct from Bootstrap's .img-responsive etc.,
+// which already work) is used alone on business-logo <img> tags in a couple
+// of print receipt templates (sell_return/receipt.blade.php,
+// sale_pos/receipts/elegant_modified.blade.php) with zero CSS anywhere, so
+// an uploaded logo can render at native resolution and break the receipt.
+img.img { max-width: 150px; max-height: 120px; width: auto; height: auto; }
+
+// POS checkout "processing" lock — public/js/pos.js shows/hides this via
+// $('div.pos-processing').show()/.hide() while a sale is being submitted,
+// meant to block double-submission, but .div-overlay/.pos-processing has
+// never had any CSS either, so "showing" it produced an invisible, inert,
+// unpositioned <div> with no blocking or dimming effect at all. CSS-only
+// fix (no markup/JS touched, per this page's fragility constraints):
+// cover the viewport while a submit is in flight.
+.div-overlay.pos-processing {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1050;
+    background: rgba(255, 255, 255, .6);
+    cursor: wait;
+}
+.div-overlay.pos-processing::after {
+    content: '';
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 32px;
+    height: 32px;
+    margin: -16px 0 0 -16px;
+    border: 3px solid var(--ink-200);
+    border-top-color: var(--brand-600);
+    border-radius: 50%;
+    animation: pos-processing-spin .7s linear infinite;
+}
+@keyframes pos-processing-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {
+    .div-overlay.pos-processing::after { animation: none; }
+}
+
+// Contact list "Converted from leads" badge (ContactController.php) — .label
+// is already styled (pill-shaped by default, see badges/labels section
+// above), but the extra `.label-round` class it also carries has never had
+// a CSS rule of its own. Harmless today only because .label already
+// produces the intended pill shape; kept here as a no-op-safe explicit fix
+// rather than leaving another zero-CSS class in the markup.
+.label-round { border-radius: 999px; }
+
 // ---------- loading states ----------
 // Ladda is "themeless" on purpose (see app.scss) — its spinner reads the
 // button's own computed text color, so it already matches our .btn styles

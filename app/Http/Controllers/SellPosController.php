@@ -483,6 +483,11 @@ class SellPosController extends Controller
 
                 $this->transactionUtil->createOrUpdateSellLines($transaction, $input['products'], $input['location_id']);
 
+                //Dispatched here (not listened to anywhere before Phase 3's GL) so the
+                //optional double-entry ledger can recognize revenue/COGS once a
+                //business opts in — inert no-op otherwise.
+                event(new \App\Events\SellCreatedOrModified($transaction));
+
                 $change_return['amount'] = $input['change_return'] ?? 0;
                 $change_return['is_return'] = 1;
 
@@ -1321,6 +1326,10 @@ class SellPosController extends Controller
 
                 //Update Sell lines
                 $deleted_lines = $this->transactionUtil->createOrUpdateSellLines($transaction, $input['products'], $input['location_id'], true, $status_before);
+
+                //See the note on the create() path above — inert unless a business
+                //has opted into Phase 3's GL.
+                event(new \App\Events\SellCreatedOrModified($transaction));
 
                 //Update update lines
                 $is_credit_sale = isset($input['is_credit_sale']) && $input['is_credit_sale'] == 1 ? true : false;
@@ -2510,6 +2519,10 @@ class SellPosController extends Controller
 
             //Create sell lines
             $this->transactionUtil->createOrUpdateSellLines($transaction, $order_data['products'], $order_data['location_id'], false, null, [], false);
+
+            //See the note on the main create() path above — inert unless a business
+            //has opted into Phase 3's GL.
+            event(new \App\Events\SellCreatedOrModified($transaction));
 
             //update product stock
             foreach ($order_data['products'] as $product) {

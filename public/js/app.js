@@ -2849,5 +2849,41 @@ $(document).on('submit', 'form#pay_contact_due_form', function(e){
     } else {
         $('#pay_contact_due_form').find('.cash_denomination_error').addClass('hide');
     }
-    
+
+});
+
+//HR: header clock-in/clock-out widget
+$(document).on('click', '#hr_clock_in_btn', function() {
+    $(this).attr('disabled', true);
+    $.ajax({
+        method: 'POST',
+        url: '/hr/attendance/clock-in',
+        dataType: 'json',
+        success: function(result) {
+            if (result.success) {
+                toastr.success(result.msg);
+                location.reload();
+            } else {
+                toastr.error(result.msg);
+                $('#hr_clock_in_btn').attr('disabled', false);
+            }
+        },
+    });
+});
+$(document).on('click', '#hr_clock_out_btn', function() {
+    $(this).attr('disabled', true);
+    $.ajax({
+        method: 'POST',
+        url: '/hr/attendance/clock-out',
+        dataType: 'json',
+        success: function(result) {
+            if (result.success) {
+                toastr.success(result.msg);
+                location.reload();
+            } else {
+                toastr.error(result.msg);
+                $('#hr_clock_out_btn').attr('disabled', false);
+            }
+        },
+    });
 })

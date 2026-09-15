@@ -18,6 +18,7 @@ class EventServiceProvider extends ServiceProvider
         // ],
         \App\Events\TransactionPaymentAdded::class => [
             \App\Listeners\AddAccountTransaction::class,
+            \App\Listeners\PostJournalForPayment::class,
         ],
 
         \App\Events\TransactionPaymentUpdated::class => [
@@ -26,6 +27,22 @@ class EventServiceProvider extends ServiceProvider
 
         \App\Events\TransactionPaymentDeleted::class => [
             \App\Listeners\DeleteAccountTransaction::class,
+        ],
+
+        \App\Events\SellCreatedOrModified::class => [
+            \App\Listeners\PostJournalForSell::class,
+        ],
+
+        \App\Events\PurchaseCreatedOrModified::class => [
+            \App\Listeners\PostJournalForPurchase::class,
+        ],
+
+        \App\Events\ExpenseCreatedOrModified::class => [
+            \App\Listeners\PostJournalForExpense::class,
+        ],
+
+        \App\Events\StockAdjustmentCreatedOrModified::class => [
+            \App\Listeners\PostJournalForStockAdjustment::class,
         ],
     ];
 

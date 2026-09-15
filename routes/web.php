@@ -3,6 +3,12 @@
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AccountReportsController;
 use App\Http\Controllers\AccountTypeController;
+use App\Http\Controllers\Accounting\ChartOfAccountController;
+use App\Http\Controllers\Accounting\ChartOfAccountMappingController;
+use App\Http\Controllers\Accounting\GlReportController;
+use App\Http\Controllers\Accounting\JournalEntryController;
+use App\Http\Controllers\ApprovalController;
+use App\Http\Controllers\ApprovalWorkflowController;
 // use App\Http\Controllers\Auth;
 use App\Http\Controllers\BackUpController;
 use App\Http\Controllers\BarcodeController;
@@ -13,6 +19,11 @@ use App\Http\Controllers\CashRegisterController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CombinedPurchaseReturnController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\Crm\ActivityController as CrmActivityController;
+use App\Http\Controllers\Crm\LeadController;
+use App\Http\Controllers\Crm\LeadSourceController;
+use App\Http\Controllers\Crm\PipelineController;
+use App\Http\Controllers\Crm\PipelineStageController;
 use App\Http\Controllers\CustomerGroupController;
 use App\Http\Controllers\DashboardConfiguratorController;
 use App\Http\Controllers\DiscountController;
@@ -20,6 +31,14 @@ use App\Http\Controllers\DocumentAndNoteController;
 use App\Http\Controllers\ExpenseCategoryController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\GroupTaxController;
+use App\Http\Controllers\Hr\AttendanceController;
+use App\Http\Controllers\Hr\DepartmentController as HrDepartmentController;
+use App\Http\Controllers\Hr\DesignationController as HrDesignationController;
+use App\Http\Controllers\Hr\EmployeeController;
+use App\Http\Controllers\Hr\LeaveRequestController;
+use App\Http\Controllers\Hr\LeaveTypeController;
+use App\Http\Controllers\Hr\PayrollComponentController;
+use App\Http\Controllers\Hr\PayrollRunController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImportOpeningStockController;
 use App\Http\Controllers\ImportProductsController;
@@ -29,12 +48,16 @@ use App\Http\Controllers\InvoiceLayoutController;
 use App\Http\Controllers\InvoiceSchemeController;
 use App\Http\Controllers\LabelsController;
 use App\Http\Controllers\LedgerDiscountController;
+use App\Http\Controllers\Manufacturing\ManufacturingController;
+use App\Http\Controllers\Manufacturing\WorkOrderController;
 use App\Http\Controllers\LocationSettingsController;
 use App\Http\Controllers\ManageUserController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OpeningStockController;
 use App\Http\Controllers\PrinterController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\ProjectTaskController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\PurchaseOrderController;
 use App\Http\Controllers\PurchaseRequisitionController;
@@ -109,6 +132,105 @@ Route::middleware(['setData', 'auth', 'SetSessionData', 'language', 'timezone', 
     Route::post('/get-requisition-products', [PurchaseRequisitionController::class, 'getRequisitionProducts'])->name('get-requisition-products');
     Route::get('get-purchase-requisitions/{location_id}', [PurchaseRequisitionController::class, 'getPurchaseRequisitions']);
     Route::get('get-purchase-requisition-lines/{purchase_requisition_id}', [PurchaseRequisitionController::class, 'getPurchaseRequisitionLines']);
+
+    Route::resource('approval-workflows', ApprovalWorkflowController::class)->except(['show']);
+
+    Route::get('my-approvals', [ApprovalController::class, 'index'])->name('my-approvals');
+    Route::post('my-approvals/{id}/decide', [ApprovalController::class, 'decide'])->name('my-approvals.decide');
+
+    Route::group(['prefix' => 'hr'], function () {
+        Route::resource('departments', HrDepartmentController::class)->except(['show']);
+        Route::resource('designations', HrDesignationController::class)->except(['show']);
+        Route::resource('employees', EmployeeController::class);
+        Route::post('employees/{id}/terminate', [EmployeeController::class, 'terminate'])->name('hr.employees.terminate');
+        Route::post('employees/{id}/salary-structure', [EmployeeController::class, 'storeSalaryStructure'])->name('hr.employees.salary-structure');
+
+        Route::get('attendance', [AttendanceController::class, 'index'])->name('hr.attendance.index');
+        Route::post('attendance/clock-in', [AttendanceController::class, 'clockIn'])->name('hr.attendance.clock-in');
+        Route::post('attendance/clock-out', [AttendanceController::class, 'clockOut'])->name('hr.attendance.clock-out');
+        Route::get('attendance/create', [AttendanceController::class, 'create'])->name('hr.attendance.create');
+        Route::post('attendance', [AttendanceController::class, 'store'])->name('hr.attendance.store');
+        Route::get('attendance/{id}/edit', [AttendanceController::class, 'edit'])->name('hr.attendance.edit');
+        Route::put('attendance/{id}', [AttendanceController::class, 'update'])->name('hr.attendance.update');
+        Route::get('attendance-import', [AttendanceController::class, 'importForm'])->name('hr.attendance.import-form');
+        Route::post('attendance-import', [AttendanceController::class, 'import'])->name('hr.attendance.import');
+
+        Route::get('attendance-shifts', [AttendanceController::class, 'shiftsIndex'])->name('hr.shifts.index');
+        Route::get('attendance-shifts/create', [AttendanceController::class, 'createShift'])->name('hr.shifts.create');
+        Route::post('attendance-shifts', [AttendanceController::class, 'storeShift'])->name('hr.shifts.store');
+        Route::get('attendance-shifts/{id}/edit', [AttendanceController::class, 'editShift'])->name('hr.shifts.edit');
+        Route::put('attendance-shifts/{id}', [AttendanceController::class, 'updateShift'])->name('hr.shifts.update');
+        Route::delete('attendance-shifts/{id}', [AttendanceController::class, 'destroyShift'])->name('hr.shifts.destroy');
+
+        Route::get('holidays', [AttendanceController::class, 'holidaysIndex'])->name('hr.holidays.index');
+        Route::post('holidays', [AttendanceController::class, 'storeHoliday'])->name('hr.holidays.store');
+        Route::delete('holidays/{id}', [AttendanceController::class, 'destroyHoliday'])->name('hr.holidays.destroy');
+
+        Route::resource('leave-types', LeaveTypeController::class)->except(['show']);
+
+        Route::resource('leave-requests', LeaveRequestController::class)->only(['index', 'create', 'store']);
+        Route::post('leave-requests/{id}/decide', [LeaveRequestController::class, 'decide'])->name('hr.leave-requests.decide');
+        Route::post('leave-requests/{id}/cancel', [LeaveRequestController::class, 'cancel'])->name('hr.leave-requests.cancel');
+
+        Route::resource('payroll-components', PayrollComponentController::class)->except(['show']);
+
+        Route::resource('payroll-runs', PayrollRunController::class)->only(['index', 'create', 'store', 'show']);
+        Route::post('payroll-runs/{id}/approve', [PayrollRunController::class, 'approve'])->name('hr.payroll-runs.approve');
+        Route::post('payroll-runs/{id}/post-to-ledger', [PayrollRunController::class, 'postToLedger'])->name('hr.payroll-runs.post-to-ledger');
+        Route::post('payroll-runs/{id}/cancel', [PayrollRunController::class, 'cancel'])->name('hr.payroll-runs.cancel');
+        Route::get('payslips/{id}/pdf', [PayrollRunController::class, 'payslipPdf'])->name('hr.payslips.pdf');
+    });
+
+    Route::group(['prefix' => 'crm'], function () {
+        Route::get('leads/board', [LeadController::class, 'board'])->name('crm.leads.board');
+        Route::post('leads/move-stage', [LeadController::class, 'postMoveStage'])->name('crm.leads.move-stage');
+        Route::post('leads/{id}/convert-to-customer', [LeadController::class, 'convertToCustomer'])->name('crm.leads.convert-to-customer');
+        Route::post('leads/{id}/convert-to-quotation', [LeadController::class, 'convertToQuotation'])->name('crm.leads.convert-to-quotation');
+        Route::resource('leads', LeadController::class);
+
+        Route::resource('pipelines', PipelineController::class)->except(['show']);
+        Route::post('pipelines/{pipeline_id}/stages', [PipelineStageController::class, 'store'])->name('crm.pipeline-stages.store');
+        Route::put('pipeline-stages/{id}', [PipelineStageController::class, 'update'])->name('crm.pipeline-stages.update');
+        Route::delete('pipeline-stages/{id}', [PipelineStageController::class, 'destroy'])->name('crm.pipeline-stages.destroy');
+
+        Route::resource('lead-sources', LeadSourceController::class)->except(['show']);
+
+        Route::post('activities', [CrmActivityController::class, 'store'])->name('crm.activities.store');
+        Route::post('activities/{id}/complete', [CrmActivityController::class, 'complete'])->name('crm.activities.complete');
+        Route::get('my-tasks', [CrmActivityController::class, 'myTasks'])->name('crm.my-tasks');
+    });
+
+    Route::group(['prefix' => 'accounting'], function () {
+        Route::resource('chart-of-accounts', ChartOfAccountController::class)->except(['show']);
+        Route::post('chart-of-accounts-import-default', [ChartOfAccountController::class, 'importDefaultChart'])->name('accounting.chart-of-accounts.import-default');
+
+        Route::get('setup', [ChartOfAccountMappingController::class, 'index'])->name('accounting.setup');
+        Route::post('setup', [ChartOfAccountMappingController::class, 'update'])->name('accounting.setup.update');
+
+        Route::resource('journal-entries', JournalEntryController::class)->only(['index', 'create', 'store', 'show']);
+        Route::post('journal-entries/{id}/reverse', [JournalEntryController::class, 'reverse'])->name('accounting.journal-entries.reverse');
+
+        Route::get('reports/trial-balance', [GlReportController::class, 'trialBalance'])->name('accounting.reports.trial-balance');
+        Route::get('reports/balance-sheet', [GlReportController::class, 'balanceSheet'])->name('accounting.reports.balance-sheet');
+        Route::get('reports/profit-and-loss', [GlReportController::class, 'profitAndLoss'])->name('accounting.reports.profit-and-loss');
+        Route::get('reports/general-ledger', [GlReportController::class, 'generalLedger'])->name('accounting.reports.general-ledger');
+    });
+
+    Route::group(['prefix' => 'manufacturing'], function () {
+        Route::resource('boms', ManufacturingController::class)->except(['show']);
+
+        Route::resource('work-orders', WorkOrderController::class)->only(['index', 'create', 'store', 'show']);
+        Route::post('work-orders/{id}/start', [WorkOrderController::class, 'start'])->name('manufacturing.work-orders.start');
+        Route::post('work-orders/{id}/complete', [WorkOrderController::class, 'complete'])->name('manufacturing.work-orders.complete');
+        Route::post('work-orders/{id}/cancel', [WorkOrderController::class, 'cancel'])->name('manufacturing.work-orders.cancel');
+    });
+
+    Route::resource('projects', ProjectController::class);
+    Route::post('projects/{project_id}/tasks', [ProjectTaskController::class, 'store'])->name('projects.tasks.store');
+    Route::post('project-tasks/{id}/move-status', [ProjectTaskController::class, 'moveStatus'])->name('project-tasks.move-status');
+    Route::post('project-tasks/{id}/comments', [ProjectTaskController::class, 'addComment'])->name('project-tasks.comments');
+    Route::post('project-tasks/{id}/log-time', [ProjectTaskController::class, 'logTime'])->name('project-tasks.log-time');
+    Route::delete('project-tasks/{id}', [ProjectTaskController::class, 'destroy'])->name('project-tasks.destroy');
 
     Route::get('/sign-in-as-user/{id}', [ManageUserController::class, 'signInAsUser'])->name('sign-in-as-user');
 

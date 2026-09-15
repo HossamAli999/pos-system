@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Traits\BusinessAuditable;
 use App\Utils\Util;
 use DB;
 use Illuminate\Database\Eloquent\Model;
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Account extends Model
 {
     use SoftDeletes;
+    use BusinessAuditable;
 
     protected $guarded = ['id'];
 
@@ -125,5 +127,10 @@ class Account extends Model
     public function account_type()
     {
         return $this->belongsTo(\App\AccountType::class, 'account_type_id');
+    }
+
+    public function chart_of_account()
+    {
+        return $this->belongsTo(\App\ChartOfAccount::class, 'chart_of_account_id');
     }
 }

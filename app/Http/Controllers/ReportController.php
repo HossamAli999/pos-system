@@ -3524,6 +3524,10 @@ class ReportController extends Controller
 
     public function activityLog()
     {
+        if (! auth()->user()->can('audit_log.view')) {
+            abort(403, 'Unauthorized action.');
+        }
+
         $business_id = request()->session()->get('user.business_id');
         $transaction_types = [
             'contact' => __('report.contact'),

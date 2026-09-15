@@ -375,6 +375,9 @@ class ImportSalesController extends Controller
 
             $this->transactionUtil->createOrUpdateSellLines($transaction, $sell_lines, $location_id, false, null, [], false);
 
+            //Inert unless a business has opted into Phase 3's GL — see SellPosController.
+            event(new \App\Events\SellCreatedOrModified($transaction));
+
             foreach ($sell_lines as $line) {
                 if ($line['enable_stock']) {
                     $this->productUtil->decreaseProductQuantity(

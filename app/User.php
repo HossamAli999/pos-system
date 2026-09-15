@@ -49,6 +49,11 @@ class User extends Authenticatable
         return $this->belongsTo(\App\Business::class);
     }
 
+    public function employee()
+    {
+        return $this->hasOne(\App\Employee::class, 'user_id');
+    }
+
     public function scopeUser($query)
     {
         return $query->where('users.user_type', 'user');

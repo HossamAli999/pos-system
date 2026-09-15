@@ -114,7 +114,7 @@ body[class*="skin-"] .main-header {
     }
 
     li.user-header {
-        background: var(--brand-600) !important;
+        background: #fff !important;
     }
 }
 
@@ -1473,9 +1473,59 @@ td.dataTables_empty {
 }
 .navbar-nav > .user-menu .dropdown-menu {
     padding: 0;
-    li.user-header { background: var(--brand-600); border-radius: var(--radius) var(--radius) 0 0; }
-    li.user-footer { border-top: 1px solid var(--ink-100); padding: 10px; border-radius: 0 0 var(--radius) var(--radius); }
-    li.user-footer .btn-default { border-radius: var(--radius-sm); }
+    width: 230px;
+
+    li.user-header {
+        height: auto;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-align: left;
+        padding: 12px 14px;
+        border-bottom: 1px solid var(--ink-100);
+        border-radius: var(--radius) var(--radius) 0 0;
+
+        > img {
+            height: 36px;
+            width: 36px;
+            border: none;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        > p {
+            margin: 0;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--ink-900);
+        }
+    }
+    li.user-footer {
+        background: transparent;
+        border-top: 1px solid var(--ink-100);
+        padding: 6px;
+        border-radius: 0 0 var(--radius) var(--radius);
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+
+        .pull-left, .pull-right { float: none; width: 100%; }
+
+        .btn-default {
+            display: block;
+            width: 100%;
+            text-align: left;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            border-radius: var(--radius-sm);
+            color: var(--ink-700);
+            padding: 8px 10px;
+        }
+        .btn-default:hover, .btn-default:focus {
+            background: var(--ink-50);
+            color: var(--ink-900);
+        }
+    }
 }
 .navbar-nav > .notifications-menu > .dropdown-menu,
 .navbar-nav > .messages-menu > .dropdown-menu,

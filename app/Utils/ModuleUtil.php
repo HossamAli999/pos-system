@@ -495,6 +495,10 @@ class ModuleUtil extends Util
             'types_of_service' => ['name' => __('lang_v1.types_of_service'),
                 'tooltip' => __('lang_v1.types_of_service_help_long'),
             ],
+            'hr' => ['name' => __('hr.human_resources')],
+            'crm' => ['name' => __('crm.crm')],
+            'manufacturing' => ['name' => __('manufacturing.manufacturing')],
+            'projects' => ['name' => __('project.projects')],
         ];
     }
 

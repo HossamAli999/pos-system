@@ -401,6 +401,11 @@ class PurchaseController extends Controller
 
             $this->productUtil->createOrUpdatePurchaseLines($transaction, $purchases, $currency_details, $enable_product_editing);
 
+            //Dispatched here (not listened to anywhere before Phase 3's GL) so the
+            //optional double-entry ledger can recognize inventory/payable once a
+            //business opts in — inert no-op otherwise.
+            event(new \App\Events\PurchaseCreatedOrModified($transaction));
+
             //Add Purchase payments
             $this->transactionUtil->createOrUpdatePaymentLines($transaction, $request->input('payment'));
 
@@ -734,6 +739,10 @@ class PurchaseController extends Controller
             $purchases = $request->input('purchases');
 
             $delete_purchase_lines = $this->productUtil->createOrUpdatePurchaseLines($transaction, $purchases, $currency_details, $enable_product_editing, $before_status);
+
+            //See the note on the store() path above — inert unless a business has
+            //opted into Phase 3's GL.
+            event(new \App\Events\PurchaseCreatedOrModified($transaction));
 
             //Update mapping of purchase & Sell.
             $this->transactionUtil->adjustMappingPurchaseSellAfterEditingPurchase($before_status, $transaction, $delete_purchase_lines);

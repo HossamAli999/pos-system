@@ -2,10 +2,13 @@
 
 namespace App;
 
+use App\Traits\BusinessAuditable;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
+    use BusinessAuditable;
+
     /**
      * The attributes that aren't mass assignable.
      *

@@ -1620,6 +1620,132 @@
           </div>
         </div>
 
+        <div class="row check_group">
+          <div class="col-md-3">
+            <h4>@lang('lang_v1.activity_log')</h4>
+          </div>
+          <div class="col-md-9">
+            <div class="col-md-12">
+              <div class="checkbox">
+                <label>
+                  {!! Form::checkbox('permissions[]', 'audit_log.view', in_array('audit_log.view', $role_permissions),
+                  [ 'class' => 'input-icheck']); !!} {{ __('lang_v1.activity_log') }}
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row check_group">
+          <div class="col-md-3">
+            <h4>@lang('approval.approvals')</h4>
+          </div>
+          <div class="col-md-9">
+            <div class="col-md-12">
+              <div class="checkbox">
+                <label>
+                  {!! Form::checkbox('permissions[]', 'approval_workflow.manage', in_array('approval_workflow.manage', $role_permissions),
+                  [ 'class' => 'input-icheck']); !!} {{ __('approval.permission_manage_workflows') }}
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row check_group">
+          <div class="col-md-3">
+            <h4>@lang('hr.human_resources')</h4>
+          </div>
+          <div class="col-md-9">
+            @foreach(['employee.view', 'employee.create', 'employee.update', 'employee.delete',
+                'attendance.view', 'attendance.manage', 'leave_type.manage',
+                'leave_request.view_own', 'leave_request.view_all', 'leave_request.approve',
+                'payroll.view', 'payroll.manage', 'payroll.approve', 'payroll.post_to_ledger'] as $hr_permission)
+              <div class="col-md-4">
+                <div class="checkbox">
+                  <label>
+                    {!! Form::checkbox('permissions[]', $hr_permission, in_array($hr_permission, $role_permissions),
+                    [ 'class' => 'input-icheck']); !!} {{ $hr_permission }}
+                  </label>
+                </div>
+              </div>
+            @endforeach
+          </div>
+        </div>
+
+        <div class="row check_group">
+          <div class="col-md-3">
+            <h4>@lang('crm.crm')</h4>
+          </div>
+          <div class="col-md-9">
+            @foreach(['crm_lead.view_all', 'crm_lead.view_own', 'crm_lead.create', 'crm_lead.update', 'crm_lead.delete',
+                'crm_pipeline.manage', 'crm_activity.manage'] as $crm_permission)
+              <div class="col-md-4">
+                <div class="checkbox">
+                  <label>
+                    {!! Form::checkbox('permissions[]', $crm_permission, in_array($crm_permission, $role_permissions),
+                    [ 'class' => 'input-icheck']); !!} {{ $crm_permission }}
+                  </label>
+                </div>
+              </div>
+            @endforeach
+          </div>
+        </div>
+
+        <div class="row check_group">
+          <div class="col-md-3">
+            <h4>@lang('gl.accounting')</h4>
+          </div>
+          <div class="col-md-9">
+            @foreach(['gl.manage', 'gl.view_reports', 'journal_entry.view', 'journal_entry.create'] as $gl_permission)
+              <div class="col-md-4">
+                <div class="checkbox">
+                  <label>
+                    {!! Form::checkbox('permissions[]', $gl_permission, in_array($gl_permission, $role_permissions),
+                    [ 'class' => 'input-icheck']); !!} {{ $gl_permission }}
+                  </label>
+                </div>
+              </div>
+            @endforeach
+          </div>
+        </div>
+
+        <div class="row check_group">
+          <div class="col-md-3">
+            <h4>@lang('manufacturing.manufacturing')</h4>
+          </div>
+          <div class="col-md-9">
+            @foreach(['manufacturing.view', 'manufacturing.manage', 'work_order.view', 'work_order.create', 'work_order.complete'] as $mfg_permission)
+              <div class="col-md-4">
+                <div class="checkbox">
+                  <label>
+                    {!! Form::checkbox('permissions[]', $mfg_permission, in_array($mfg_permission, $role_permissions),
+                    [ 'class' => 'input-icheck']); !!} {{ $mfg_permission }}
+                  </label>
+                </div>
+              </div>
+            @endforeach
+          </div>
+        </div>
+
+        <div class="row check_group">
+          <div class="col-md-3">
+            <h4>@lang('project.projects')</h4>
+          </div>
+          <div class="col-md-9">
+            @foreach(['project.view_all', 'project.view_own', 'project.create', 'project.update', 'project.delete'] as $project_permission)
+              <div class="col-md-4">
+                <div class="checkbox">
+                  <label>
+                    {!! Form::checkbox('permissions[]', $project_permission, in_array($project_permission, $role_permissions),
+                    [ 'class' => 'input-icheck']); !!} {{ $project_permission }}
+                  </label>
+                </div>
+              </div>
+            @endforeach
+          </div>
+        </div>
+
         @include('role.partials.module_permissions')
         <div class="row">
         <div class="col-md-12 text-center">

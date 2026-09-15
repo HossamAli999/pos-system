@@ -31,6 +31,11 @@ class AdminSidebarMenu
             //Home
             $menu->url(action([\App\Http\Controllers\HomeController::class, 'index']), __('home.home'), ['icon' => 'fa fas fa-tachometer-alt', 'active' => request()->segment(1) == 'home'])->order(5);
 
+            //My Approvals - visible to any user, since who can act on a given
+            //request is determined per-step (user/role/permission), not by a
+            //fixed permission name.
+            $menu->url(action([\App\Http\Controllers\ApprovalController::class, 'index']), __('approval.my_approvals'), ['icon' => 'fa fas fa-check-double', 'active' => request()->segment(1) == 'my-approvals'])->order(7);
+
             //User management dropdown
             if (auth()->user()->can('user.view') || auth()->user()->can('user.create') || auth()->user()->can('roles.view')) {
                 $menu->dropdown(
@@ -422,6 +427,195 @@ class AdminSidebarMenu
                 )->order(37);
             }
 
+            //Human Resources dropdown
+            if (in_array('hr', $enabled_modules) && (
+                auth()->user()->can('employee.view') ||
+                auth()->user()->can('attendance.view') ||
+                auth()->user()->can('leave_type.manage') ||
+                auth()->user()->can('leave_request.view_own') ||
+                auth()->user()->can('leave_request.view_all') ||
+                auth()->user()->can('payroll.view')
+            )) {
+                $menu->dropdown(
+                    __('hr.human_resources'),
+                    function ($sub) {
+                        if (auth()->user()->can('employee.view')) {
+                            $sub->url(
+                                action([\App\Http\Controllers\Hr\EmployeeController::class, 'index']),
+                                __('hr.employees'),
+                                ['icon' => 'fa fas fa-users', 'active' => request()->segment(1) == 'hr' && request()->segment(2) == 'employees']
+                            );
+                        }
+                        if (auth()->user()->can('employee.create') || auth()->user()->can('employee.update')) {
+                            $sub->url(
+                                action([\App\Http\Controllers\Hr\DepartmentController::class, 'index']),
+                                __('hr.departments'),
+                                ['icon' => 'fa fas fa-sitemap', 'active' => request()->segment(1) == 'hr' && request()->segment(2) == 'departments']
+                            );
+                            $sub->url(
+                                action([\App\Http\Controllers\Hr\DesignationController::class, 'index']),
+                                __('hr.designations'),
+                                ['icon' => 'fa fas fa-id-badge', 'active' => request()->segment(1) == 'hr' && request()->segment(2) == 'designations']
+                            );
+                        }
+                        if (auth()->user()->can('attendance.view')) {
+                            $sub->url(
+                                action([\App\Http\Controllers\Hr\AttendanceController::class, 'index']),
+                                __('hr.attendance'),
+                                ['icon' => 'fa fas fa-user-clock', 'active' => request()->segment(1) == 'hr' && request()->segment(2) == 'attendance']
+                            );
+                        }
+                        if (auth()->user()->can('attendance.manage')) {
+                            $sub->url(
+                                action([\App\Http\Controllers\Hr\AttendanceController::class, 'shiftsIndex']),
+                                __('hr.shifts'),
+                                ['icon' => 'fa fas fa-business-time', 'active' => request()->segment(1) == 'hr' && request()->segment(2) == 'attendance-shifts']
+                            );
+                            $sub->url(
+                                action([\App\Http\Controllers\Hr\AttendanceController::class, 'holidaysIndex']),
+                                __('hr.holidays'),
+                                ['icon' => 'fa fas fa-umbrella-beach', 'active' => request()->segment(1) == 'hr' && request()->segment(2) == 'holidays']
+                            );
+                        }
+                        if (auth()->user()->can('leave_request.view_own') || auth()->user()->can('leave_request.view_all')) {
+                            $sub->url(
+                                action([\App\Http\Controllers\Hr\LeaveRequestController::class, 'index']),
+                                __('hr.leave_requests'),
+                                ['icon' => 'fa fas fa-calendar-minus', 'active' => request()->segment(1) == 'hr' && request()->segment(2) == 'leave-requests']
+                            );
+                        }
+                        if (auth()->user()->can('leave_type.manage')) {
+                            $sub->url(
+                                action([\App\Http\Controllers\Hr\LeaveTypeController::class, 'index']),
+                                __('hr.leave_types'),
+                                ['icon' => 'fa fas fa-calendar-alt', 'active' => request()->segment(1) == 'hr' && request()->segment(2) == 'leave-types']
+                            );
+                        }
+                        if (auth()->user()->can('payroll.view')) {
+                            $sub->url(
+                                action([\App\Http\Controllers\Hr\PayrollRunController::class, 'index']),
+                                __('hr.payroll_runs'),
+                                ['icon' => 'fa fas fa-money-check-alt', 'active' => request()->segment(1) == 'hr' && request()->segment(2) == 'payroll-runs']
+                            );
+                        }
+                        if (auth()->user()->can('payroll.manage')) {
+                            $sub->url(
+                                action([\App\Http\Controllers\Hr\PayrollComponentController::class, 'index']),
+                                __('hr.payroll_components'),
+                                ['icon' => 'fa fas fa-list-alt', 'active' => request()->segment(1) == 'hr' && request()->segment(2) == 'payroll-components']
+                            );
+                        }
+                    },
+                    ['icon' => 'fa fas fa-user-tie']
+                )->order(38);
+            }
+
+            //CRM dropdown
+            if (in_array('crm', $enabled_modules) && (
+                auth()->user()->can('crm_lead.view_all') ||
+                auth()->user()->can('crm_lead.view_own') ||
+                auth()->user()->can('crm_pipeline.manage') ||
+                auth()->user()->can('crm_activity.manage')
+            )) {
+                $menu->dropdown(
+                    __('crm.crm'),
+                    function ($sub) {
+                        if (auth()->user()->can('crm_lead.view_all') || auth()->user()->can('crm_lead.view_own')) {
+                            $sub->url(
+                                action([\App\Http\Controllers\Crm\LeadController::class, 'index']),
+                                __('crm.all_leads'),
+                                ['icon' => 'fa fas fa-list', 'active' => request()->segment(1) == 'crm' && request()->segment(2) == 'leads' && request()->segment(3) == null]
+                            );
+                            $sub->url(
+                                action([\App\Http\Controllers\Crm\LeadController::class, 'board']),
+                                __('crm.board'),
+                                ['icon' => 'fa fas fa-columns', 'active' => request()->segment(1) == 'crm' && request()->segment(2) == 'leads' && request()->segment(3) == 'board']
+                            );
+                        }
+                        if (auth()->user()->can('crm_lead.create')) {
+                            $sub->url(
+                                action([\App\Http\Controllers\Crm\LeadController::class, 'create']),
+                                __('crm.add_lead'),
+                                ['icon' => 'fa fas fa-plus-circle', 'active' => request()->segment(1) == 'crm' && request()->segment(2) == 'leads' && request()->segment(3) == 'create']
+                            );
+                        }
+                        if (auth()->user()->can('crm_activity.manage')) {
+                            $sub->url(
+                                action([\App\Http\Controllers\Crm\ActivityController::class, 'myTasks']),
+                                __('crm.my_tasks'),
+                                ['icon' => 'fa fas fa-tasks', 'active' => request()->segment(1) == 'crm' && request()->segment(2) == 'my-tasks']
+                            );
+                        }
+                        if (auth()->user()->can('crm_pipeline.manage')) {
+                            $sub->url(
+                                action([\App\Http\Controllers\Crm\PipelineController::class, 'index']),
+                                __('crm.pipelines'),
+                                ['icon' => 'fa fas fa-stream', 'active' => request()->segment(1) == 'crm' && request()->segment(2) == 'pipelines']
+                            );
+                            $sub->url(
+                                action([\App\Http\Controllers\Crm\LeadSourceController::class, 'index']),
+                                __('crm.lead_sources'),
+                                ['icon' => 'fa fas fa-map-signs', 'active' => request()->segment(1) == 'crm' && request()->segment(2) == 'lead-sources']
+                            );
+                        }
+                    },
+                    ['icon' => 'fa fas fa-funnel-dollar']
+                )->order(39);
+            }
+
+            //Manufacturing dropdown
+            if (in_array('manufacturing', $enabled_modules) && (auth()->user()->can('manufacturing.view') || auth()->user()->can('work_order.view'))) {
+                $menu->dropdown(
+                    __('manufacturing.manufacturing'),
+                    function ($sub) {
+                        if (auth()->user()->can('manufacturing.view')) {
+                            $sub->url(
+                                action([\App\Http\Controllers\Manufacturing\ManufacturingController::class, 'index']),
+                                __('manufacturing.bill_of_materials'),
+                                ['icon' => 'fa fas fa-list', 'active' => request()->segment(1) == 'manufacturing' && request()->segment(2) == 'boms']
+                            );
+                        }
+                        if (auth()->user()->can('work_order.view')) {
+                            $sub->url(
+                                action([\App\Http\Controllers\Manufacturing\WorkOrderController::class, 'index']),
+                                __('manufacturing.work_orders'),
+                                ['icon' => 'fa fas fa-industry', 'active' => request()->segment(1) == 'manufacturing' && request()->segment(2) == 'work-orders']
+                            );
+                        }
+                        if (auth()->user()->can('work_order.create')) {
+                            $sub->url(
+                                action([\App\Http\Controllers\Manufacturing\WorkOrderController::class, 'create']),
+                                __('manufacturing.add_work_order'),
+                                ['icon' => 'fa fas fa-plus-circle', 'active' => request()->segment(1) == 'manufacturing' && request()->segment(2) == 'work-orders' && request()->segment(3) == 'create']
+                            );
+                        }
+                    },
+                    ['icon' => 'fa fas fa-cogs']
+                )->order(40);
+            }
+
+            //Projects dropdown
+            if (in_array('projects', $enabled_modules) && (auth()->user()->can('project.view_all') || auth()->user()->can('project.view_own'))) {
+                $menu->dropdown(
+                    __('project.projects'),
+                    function ($sub) {
+                        $sub->url(
+                            action([\App\Http\Controllers\ProjectController::class, 'index']),
+                            __('project.all_projects'),
+                            ['icon' => 'fa fas fa-list', 'active' => request()->segment(1) == 'projects' && request()->segment(2) == null]
+                        );
+                        if (auth()->user()->can('project.create')) {
+                            $sub->url(
+                                action([\App\Http\Controllers\ProjectController::class, 'create']),
+                                __('project.add_project'),
+                                ['icon' => 'fa fas fa-plus-circle', 'active' => request()->segment(1) == 'projects' && request()->segment(2) == 'create']
+                            );
+                        }
+                    },
+                    ['icon' => 'fa fas fa-tasks']
+                )->order(41);
+            }
+
             //stock adjustment dropdown
             if (in_array('stock_adjustment', $enabled_modules) && (auth()->user()->can('purchase.view') || auth()->user()->can('purchase.create'))) {
                 $menu->dropdown(
@@ -509,6 +703,59 @@ class AdminSidebarMenu
                     },
                     ['icon' => 'fa fas fa-money-check-alt']
                 )->order(50);
+            }
+
+            //Accounting (GL) dropdown — separate, additive double-entry ledger;
+            //does not replace the Payment Accounts dropdown above.
+            if (auth()->user()->can('gl.manage') || auth()->user()->can('gl.view_reports') ||
+                auth()->user()->can('journal_entry.view') || auth()->user()->can('journal_entry.create')) {
+                $menu->dropdown(
+                    __('gl.accounting'),
+                    function ($sub) {
+                        if (auth()->user()->can('gl.manage')) {
+                            $sub->url(
+                                action([\App\Http\Controllers\Accounting\ChartOfAccountMappingController::class, 'index']),
+                                __('gl.setup_accounting'),
+                                ['icon' => 'fa fas fa-cogs', 'active' => request()->segment(1) == 'accounting' && request()->segment(2) == 'setup']
+                            );
+                            $sub->url(
+                                action([\App\Http\Controllers\Accounting\ChartOfAccountController::class, 'index']),
+                                __('gl.chart_of_accounts'),
+                                ['icon' => 'fa fas fa-list', 'active' => request()->segment(1) == 'accounting' && request()->segment(2) == 'chart-of-accounts']
+                            );
+                        }
+                        if (auth()->user()->can('journal_entry.view')) {
+                            $sub->url(
+                                action([\App\Http\Controllers\Accounting\JournalEntryController::class, 'index']),
+                                __('gl.journal_entries'),
+                                ['icon' => 'fa fas fa-book', 'active' => request()->segment(1) == 'accounting' && request()->segment(2) == 'journal-entries']
+                            );
+                        }
+                        if (auth()->user()->can('gl.view_reports')) {
+                            $sub->url(
+                                action([\App\Http\Controllers\Accounting\GlReportController::class, 'trialBalance']),
+                                __('gl.trial_balance'),
+                                ['icon' => 'fa fas fa-balance-scale', 'active' => request()->segment(1) == 'accounting' && request()->segment(2) == 'reports' && request()->segment(3) == 'trial-balance']
+                            );
+                            $sub->url(
+                                action([\App\Http\Controllers\Accounting\GlReportController::class, 'balanceSheet']),
+                                __('gl.balance_sheet'),
+                                ['icon' => 'fa fas fa-file-invoice', 'active' => request()->segment(1) == 'accounting' && request()->segment(2) == 'reports' && request()->segment(3) == 'balance-sheet']
+                            );
+                            $sub->url(
+                                action([\App\Http\Controllers\Accounting\GlReportController::class, 'profitAndLoss']),
+                                __('gl.profit_and_loss'),
+                                ['icon' => 'fa fas fa-chart-line', 'active' => request()->segment(1) == 'accounting' && request()->segment(2) == 'reports' && request()->segment(3) == 'profit-and-loss']
+                            );
+                            $sub->url(
+                                action([\App\Http\Controllers\Accounting\GlReportController::class, 'generalLedger']),
+                                __('gl.general_ledger'),
+                                ['icon' => 'fa fas fa-book-open', 'active' => request()->segment(1) == 'accounting' && request()->segment(2) == 'reports' && request()->segment(3) == 'general-ledger']
+                            );
+                        }
+                    },
+                    ['icon' => 'fa fas fa-calculator']
+                )->order(51);
             }
 
             //Reports dropdown
@@ -687,7 +934,7 @@ class AdminSidebarMenu
                             );
                         }
 
-                        if ($is_admin) {
+                        if (auth()->user()->can('audit_log.view')) {
                             $sub->url(
                                 action([\App\Http\Controllers\ReportController::class, 'activityLog']),
                                 __('lang_v1.activity_log'),
@@ -730,6 +977,7 @@ class AdminSidebarMenu
                 auth()->user()->can('invoice_settings.access') ||
                 auth()->user()->can('tax_rate.view') ||
                 auth()->user()->can('tax_rate.create') ||
+                auth()->user()->can('approval_workflow.manage') ||
                 auth()->user()->can('access_package_subscriptions')) {
                 $menu->dropdown(
                     __('business.settings'),
@@ -797,6 +1045,14 @@ class AdminSidebarMenu
                                 action([\App\Http\Controllers\TypesOfServiceController::class, 'index']),
                                 __('lang_v1.types_of_service'),
                                 ['icon' => 'fa fas fa-user-circle', 'active' => request()->segment(1) == 'types-of-service']
+                            );
+                        }
+
+                        if (auth()->user()->can('approval_workflow.manage')) {
+                            $sub->url(
+                                action([\App\Http\Controllers\ApprovalWorkflowController::class, 'index']),
+                                __('approval.approval_workflows'),
+                                ['icon' => 'fa fas fa-check-double', 'active' => request()->segment(1) == 'approval-workflows']
                             );
                         }
                     },

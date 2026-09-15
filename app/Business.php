@@ -39,6 +39,7 @@ class Business extends Model
         'sms_settings' => 'array',
         'common_settings' => 'array',
         'weighing_scale_setting' => 'array',
+        'accounting_settings' => 'array',
     ];
 
     /**

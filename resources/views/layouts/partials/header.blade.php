@@ -60,6 +60,29 @@
                     <i class="fa fa-calculator" aria-hidden="true"></i>
                 </button>
 
+                @if(in_array('hr', $enabled_modules))
+                  @php
+                    $__hr_employee = auth()->user()->employee;
+                    $__hr_today_log = null;
+                    if (! empty($__hr_employee)) {
+                        $__hr_today_log = \App\AttendanceLog::where('employee_id', $__hr_employee->id)
+                            ->where('attendance_date', \Carbon::now()->toDateString())
+                            ->first();
+                    }
+                  @endphp
+                  @if(! empty($__hr_employee))
+                    @if(empty($__hr_today_log) || empty($__hr_today_log->clock_in))
+                      <button type="button" id="hr_clock_in_btn" title="@lang('hr.clock_in')" data-toggle="tooltip" data-placement="bottom" class="header-icon-btn">
+                        <i class="fa fas fa-sign-in-alt"></i> @lang('hr.clock_in')
+                      </button>
+                    @elseif(empty($__hr_today_log->clock_out))
+                      <button type="button" id="hr_clock_out_btn" title="@lang('hr.clock_out')" data-toggle="tooltip" data-placement="bottom" class="header-icon-btn header-icon-btn--danger">
+                        <i class="fa fas fa-sign-out-alt"></i> @lang('hr.clock_out')
+                      </button>
+                    @endif
+                  @endif
+                @endif
+
                 @if($request->segment(1) == 'pos')
                   @can('view_cash_register')
                   <button type="button" id="register_details" title="{{ __('cash_register.register_details') }}" data-toggle="tooltip" data-placement="bottom" class="header-icon-btn btn-modal" data-container=".register_details_modal"

@@ -2,11 +2,14 @@
 
 namespace App;
 
+use App\Traits\BusinessAuditable;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 
 class BusinessLocation extends Model
 {
+    use BusinessAuditable;
+
     /**
      * The attributes that aren't mass assignable.
      *
